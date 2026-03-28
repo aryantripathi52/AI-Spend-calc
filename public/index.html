@@ -3493,6 +3493,9 @@
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + page).classList.add('active');
       window.scrollTo(0, 0);
+      // show bottom nav only inside the app
+      const mobileNav = document.getElementById('mobile-nav');
+      if (mobileNav) mobileNav.style.display = page === 'app' ? '' : 'none';
     }
 
     /* ═══════════════════════════════════════════
@@ -4007,7 +4010,7 @@
   </script>
 
   <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-nav" id="mobile-nav">
+  <nav class="mobile-nav" id="mobile-nav" style="display:none;">
     <div class="mobile-nav-item active" id="mnav-dashboard" onclick="mobileNav('dashboard')">
       <span class="material-symbols-outlined">dashboard</span>Home
     </div>
