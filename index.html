@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Spending Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">◈</span>
+        <div>
+          <h1>AI Spending Tracker</h1>
+          <p class="tagline">HTML · CSS · JS · data in your browser</p>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Main">
+        <a href="#overview" data-section="overview">Overview</a>
+        <a href="#transactions" data-section="transactions">Transactions</a>
+        <a href="#anomalies" data-section="anomalies">Anomalies</a>
+        <a href="#subscriptions" data-section="subscriptions">Subscriptions</a>
+        <a href="#advisor" data-section="advisor">AI Advisor</a>
+        <a href="#settings" data-section="settings">Settings</a>
+      </nav>
+      <button type="button" class="btn btn-ghost" id="btn-refresh-all" title="Refresh summary">Refresh</button>
+    </header>
+
+    <div id="budget-banner" class="budget-banner" hidden role="status"></div>
+
+    <main>
+      <section id="overview">
+        <p id="dashboard-error" class="err banner-msg" hidden></p>
+        <div class="stats">
+          <article class="stat-card">
+            <span class="stat-label">Total expenses</span>
+            <span class="stat-value" id="stat-total">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Categories</span>
+            <span class="stat-value" id="stat-categories">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Latest month</span>
+            <span class="stat-value stat-small" id="stat-last-month">—</span>
+          </article>
+        </div>
+        <div class="charts">
+          <div class="chart-wrap">
+            <h2>By category</h2>
+            <div class="chart-box"><canvas id="chart-donut" aria-label="Spend by category"></canvas></div>
+          </div>
+          <div class="chart-wrap">
+            <h2>Monthly trend</h2>
+            <div class="chart-box"><canvas id="chart-bar" aria-label="Monthly spend"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="transactions" hidden>
+        <h2>Transactions</h2>
+        <div class="grid-2">
+          <form id="tx-form" class="card form-card">
+            <h3>Add transaction</h3>
+            <label>Date <input type="date" name="date" required /></label>
+            <label>Description <input type="text" name="description" required placeholder="e.g. AWS invoice" /></label>
+            <label>Amount <input type="number" name="amount" step="0.01" min="0" required /></label>
+            <label>Type
+              <select name="type">
+                <option value="expense">expense</option>
+                <option value="income">income</option>
+              </select>
+            </label>
+            <label>Category <input type="text" name="category" placeholder="Uncategorised" /></label>
+            <label>Vendor <input type="text" name="vendor" placeholder="Optional" /></label>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+          <div class="card form-card">
+            <h3>Import &amp; categorise</h3>
+            <label class="file-label">
+              <span>CSV import</span>
+              <input type="file" id="tx-csv" accept=".csv,text/csv" />
+            </label>
+            <p class="hint">Columns: date, description, amount (or Date, Amount, Merchant).</p>
+            <button type="button" class="btn btn-secondary" id="btn-ai-categorise">AI categorise</button>
+            <p class="hint">Uses <strong>rules</strong> offline. Add a Gemini API key in Settings for smarter AI (browser call; may be blocked by CORS from <code>file://</code> — use a local static server).</p>
+          </div>
+        </div>
+        <div class="table-wrap card">
+          <table id="tx-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Vendor</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="anomalies" hidden>
+        <h2>Anomaly detection</h2>
+        <p class="lead">Flags duplicates, unusually large amounts vs category average, and large round numbers. With a Gemini key, uses AI first; otherwise local rules.</p>
+        <button type="button" class="btn btn-primary" id="btn-detect-anomalies">Detect anomalies</button>
+        <div id="anomaly-list" class="stack"></div>
+      </section>
+
+      <section id="subscriptions" hidden>
+        <h2>Subscriptions</h2>
+        <form id="sub-form" class="card form-card sub-form">
+          <div class="form-row">
+            <label>Name <input type="text" name="name" required /></label>
+            <label>Amount <input type="number" name="amount" step="0.01" min="0" required /></label>
+            <label>Cycle
+              <select name="billing_cycle">
+                <option value="monthly">monthly</option>
+                <option value="quarterly">quarterly</option>
+                <option value="annual">annual</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-row">
+            <label>Category <input type="text" name="category" placeholder="SaaS" /></label>
+            <label>Last charged <input type="date" name="last_charged" /></label>
+            <label>Notes <input type="text" name="notes" placeholder="Optional" /></label>
+          </div>
+          <button type="submit" class="btn btn-primary">Add subscription</button>
+        </form>
+        <div id="subs-list" class="stack"></div>
+      </section>
+
+      <section id="advisor" hidden>
+        <h2>AI cost advisor</h2>
+        <div class="stack">
+          <div class="card">
+            <h3>Recommendations</h3>
+            <p class="lead">Five savings ideas. Gemini key improves quality; otherwise built-in templates.</p>
+            <button type="button" class="btn btn-primary" id="btn-recommendations">Get recommendations</button>
+            <div id="advisor-list" class="stack mt"></div>
+          </div>
+          <div class="card">
+            <h3>Executive report</h3>
+            <label>Month <input type="month" id="report-month" /></label>
+            <button type="button" class="btn btn-secondary mt" id="btn-ai-report">Generate narrative report</button>
+            <button type="button" class="btn btn-ghost mt" id="btn-download-report">Download as .txt</button>
+            <div id="report-out" class="report-wrap mt"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="settings" hidden>
+        <h2>Settings</h2>
+        <div class="card">
+          <h3>Gemini API (optional)</h3>
+          <p class="lead">Stored only in this browser (localStorage). For AI calls from the page, serve the site over <code>http://localhost</code> — opening <code>index.html</code> as a <code>file://</code> URL may block API requests.</p>
+          <!-- Optional: paste a bookmark URL (e.g. AI Studio key page). Stored in localStorage only — not in this file — so private links stay out of git. -->
+          <label>Reference link <span class="muted">(optional)</span>
+            <input type="url" id="setting-ref-link" autocomplete="off" placeholder="https://aistudio.google.com/app/apikey" />
+          </label>
+          <p class="hint">Opens in a new tab from “Open key page” below. Leave blank to use the default or the link in <code>js/user-links.js</code>.</p>
+          <label>API key
+            <input type="password" id="setting-api-key" autocomplete="off" placeholder="AIza…" />
+          </label>
+          <label>Model
+            <select id="setting-model">
+              <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+              <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+              <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+            </select>
+          </label>
+          <div class="settings-actions-row">
+            <a class="btn btn-secondary" id="setting-open-key-page" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Open key page</a>
+            <button type="button" class="btn btn-primary" id="settings-save">Save</button>
+          </div>
+          <p id="settings-msg" class="hint ok" hidden></p>
+        </div>
+        <div class="card mt">
+          <h3>Monthly budgets</h3>
+          <p class="hint">Compared to this calendar month’s expenses by category.</p>
+          <div id="budget-list" class="stack"></div>
+          <form id="budget-form" class="form-row align-end">
+            <label>Category <input type="text" name="budget_category" placeholder="SaaS" required /></label>
+            <label>Limit <input type="number" name="budget_limit" step="1" min="0" required /></label>
+            <button type="submit" class="btn btn-secondary">Add budget</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Static site: <code>index.html</code> + <code>css/</code> + <code>js/</code>. Data in <code>localStorage</code>. Run <code>npx serve . -p 5500</code> to preview.</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
