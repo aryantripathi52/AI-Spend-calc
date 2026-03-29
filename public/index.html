@@ -3838,15 +3838,31 @@
     async function loadProfile(uid) {
       try {
         const { data, error } = await _sb.from('profiles').select('*').eq('id', uid).single();
-        return error ? null : data;
-      } catch { return null; }
+        if (!error && data) return data;
+      } catch { }
+      // profiles table missing or RLS blocked — build from auth user directly
+      return buildProfileFromUser(currentUser);
+    }
+
+    function buildProfileFromUser(user) {
+      if (!user) return null;
+      const meta = user.user_metadata || {};
+      return {
+        id: user.id,
+        full_name: meta.full_name || meta.name || user.email?.split('@')[0] || 'User',
+        company: meta.company || '',
+        plan: 'free',
+        txn_count: 0
+      };
     }
 
     async function upsertProfile(uid, fields) {
       try {
         const { data } = await _sb.from('profiles').upsert({ id: uid, ...fields }, { onConflict: 'id' }).select().single();
-        return data;
-      } catch { return null; }
+        if (data) return data;
+      } catch { }
+      // Fallback: merge fields into in-memory profile so UI still updates
+      return { ...(userProfile || buildProfileFromUser(currentUser) || {}), ...fields };
     }
 
     async function initAuth() {
@@ -3918,13 +3934,19 @@
     }
 
     function updateProfileUI() {
+      // If userProfile not loaded yet, try building from auth user
+      if (!userProfile && currentUser) userProfile = buildProfileFromUser(currentUser);
       if (!userProfile) return;
       const plan = userProfile.plan || 'free';
       const limits = PLAN_LIMITS[plan];
-      const initials = (userProfile.full_name || 'U').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+      // Derive display name: full_name → email prefix → 'User'
+      const displayName = userProfile.full_name
+        || currentUser?.email?.split('@')[0]
+        || 'User';
+      const initials = displayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
       const el = id => document.getElementById(id);
       if (el('sidebar-avatar')) el('sidebar-avatar').textContent = initials;
-      if (el('sidebar-name')) el('sidebar-name').textContent = userProfile.full_name || 'User';
+      if (el('sidebar-name')) el('sidebar-name').textContent = displayName;
       if (el('sidebar-plan')) { el('sidebar-plan').textContent = limits.label + ' Plan'; el('sidebar-plan').style.color = limits.color; }
       if (el('plan-badge')) { el('plan-badge').textContent = limits.label; el('plan-badge').style.color = limits.color; }
       if (el('pricing-plan-label')) el('pricing-plan-label').textContent = limits.label;
