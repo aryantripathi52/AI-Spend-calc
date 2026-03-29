@@ -5,7 +5,7 @@ const path = require('path');
 
 const app = express();
 app.use(express.json());
-
+app.set('trust proxy', 1);
 // ── Serve frontend ──────────────────────────────────────────
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,6 +28,7 @@ app.get('/api/config', (req, res) => {
 const aiLimiter = rateLimit({
   windowMs: 60_000,
   max: 20,
+  validate: { xForwardedForHeader: false },
   message: { error: 'Too many requests — please wait a moment.' }
 });
 
