@@ -13,10 +13,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1"
     rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    /* ═══════════════════════════════════════════════
-   OBSIDIAN ARCHITECT — DESIGN TOKENS
-═══════════════════════════════════════════════ */
     :root {
       --bg-lowest: #0c0e13;
       --bg-surface: #111318;
@@ -63,7 +61,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ═══ UTILITY ═══ */
     .syne {
       font-family: var(--ff-head);
     }
@@ -99,40 +96,40 @@
       0%,
       100% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1)
       }
 
       50% {
         opacity: .5;
-        transform: scale(.85);
+        transform: scale(.85)
       }
     }
 
     @keyframes spin {
       to {
-        transform: rotate(360deg);
+        transform: rotate(360deg)
       }
     }
 
     @keyframes fade-up {
       from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(16px)
       }
 
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0)
       }
     }
 
     @keyframes shimmer {
       0% {
-        background-position: -400px 0;
+        background-position: -400px 0
       }
 
       100% {
-        background-position: 400px 0;
+        background-position: 400px 0
       }
     }
 
@@ -140,11 +137,11 @@
 
       0%,
       100% {
-        box-shadow: 0 0 20px rgba(79, 124, 255, .2);
+        box-shadow: 0 0 20px rgba(79, 124, 255, .2)
       }
 
       50% {
-        box-shadow: 0 0 35px rgba(79, 124, 255, .45);
+        box-shadow: 0 0 35px rgba(79, 124, 255, .45)
       }
     }
 
@@ -167,9 +164,64 @@
       border-radius: 4px;
     }
 
-    /* ═══════════════════════════════════════════════
-   SCROLLBAR
-═══════════════════════════════════════════════ */
+    .modal {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .stat-card .stat-label {
+      font-family: var(--ff-mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--outline);
+      margin-bottom: 8px;
+    }
+
+    .stat-card .stat-val {
+      font-family: var(--ff-head);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-sub {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--outline);
+    }
+
+    .mobile-nav {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 0;
+      justify-content: flex-start;
+      padding: 0 4px;
+    }
+
+    .mobile-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mobile-nav-item {
+      min-width: 64px;
+      flex-shrink: 0;
+    }
+
+    .gst-tag {
+      font-family: var(--ff-mono);
+      font-size: 9px;
+      color: var(--outline);
+      display: block;
+      margin-top: 2px;
+    }
+
+    #pending-badge {
+      vertical-align: middle;
+    }
+
     ::-webkit-scrollbar {
       width: 5px;
       height: 5px;
@@ -184,9 +236,7 @@
       border-radius: 4px;
     }
 
-    /* ═══════════════════════════════════════════════
-   BUTTONS
-═══════════════════════════════════════════════ */
+    /* BUTTONS */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -243,9 +293,7 @@
       font-size: 16px;
     }
 
-    /* ═══════════════════════════════════════════════
-   MATERIAL ICONS
-═══════════════════════════════════════════════ */
+    /* ICONS */
     .material-symbols-outlined {
       font-family: 'Material Symbols Outlined';
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -258,9 +306,7 @@
       font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
 
-    /* ═══════════════════════════════════════════════
-   BADGE / CHIP
-═══════════════════════════════════════════════ */
+    /* CHIPS */
     .chip {
       display: inline-flex;
       align-items: center;
@@ -309,15 +355,12 @@
       border: 1px solid rgba(255, 209, 102, .2);
     }
 
-    /* ═══════════════════════════════════════════════
-   PAGE: LANDING
-═══════════════════════════════════════════════ */
+    /* LANDING */
     #page-landing {
       background: var(--bg-lowest);
       min-height: 100vh;
     }
 
-    /* NAV */
     .land-nav {
       position: fixed;
       top: 0;
@@ -367,7 +410,6 @@
       gap: 12px;
     }
 
-    /* HERO */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -483,7 +525,6 @@
       font-size: 14px;
     }
 
-    /* HERO MOCKUP CARD */
     .hero-card {
       position: relative;
       z-index: 1;
@@ -557,7 +598,6 @@
       box-shadow: 0 0 12px rgba(79, 124, 255, .4);
     }
 
-    /* TRUST BAR */
     .trust-bar {
       padding: 40px 64px;
       border-top: 1px solid rgba(67, 70, 84, .1);
@@ -596,7 +636,6 @@
       opacity: 1;
     }
 
-    /* FEATURES */
     .section {
       padding: 100px 64px;
     }
@@ -642,7 +681,6 @@
       background: var(--bg-container);
       padding: 36px 32px;
       transition: background .2s;
-      border: 1px solid transparent;
     }
 
     .feature-card:hover {
@@ -680,7 +718,6 @@
       font-size: 17px;
       font-weight: 700;
       margin-bottom: 10px;
-      color: var(--on-surface);
     }
 
     .feature-card p {
@@ -689,7 +726,6 @@
       line-height: 1.65;
     }
 
-    /* HOW IT WORKS */
     .hiw-section {
       padding: 80px 64px;
       background: var(--bg-surface);
@@ -749,7 +785,6 @@
       line-height: 1.65;
     }
 
-    /* PRICING */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -860,7 +895,6 @@
       opacity: .5;
     }
 
-    /* TESTIMONIALS */
     .testi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -873,7 +907,6 @@
       border: 1px solid rgba(67, 70, 84, .15);
       border-radius: 16px;
       padding: 28px;
-      ledger-glow: true;
     }
 
     .testi-card .quote {
@@ -931,7 +964,6 @@
       letter-spacing: .05em;
     }
 
-    /* CTA BANNER */
     .cta-banner {
       margin: 0 64px 80px;
       background: linear-gradient(135deg, rgba(79, 124, 255, .15), rgba(123, 94, 167, .1));
@@ -975,7 +1007,6 @@
       font-size: 15px;
     }
 
-    /* LAND FOOTER */
     .land-footer {
       background: var(--bg-surface);
       border-top: 1px solid rgba(67, 70, 84, .12);
@@ -1042,9 +1073,7 @@
       text-transform: uppercase;
     }
 
-    /* ═══════════════════════════════════════════════
-   PAGE: LOGIN
-═══════════════════════════════════════════════ */
+    /* LOGIN */
     #page-login {
       display: none;
       min-height: 100vh;
@@ -1156,23 +1185,6 @@
       background: var(--bg-container-high);
     }
 
-    .sso-g {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #4285f4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .sso-g span {
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      font-family: 'Syne';
-    }
-
     .divider {
       display: flex;
       align-items: center;
@@ -1274,6 +1286,11 @@
       background: #648aff;
     }
 
+    .btn-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .login-switch {
       text-align: center;
       font-size: 13px;
@@ -1326,7 +1343,6 @@
       color: var(--primary);
     }
 
-    /* LOGIN RIGHT */
     .login-right {
       flex: 1;
       background: var(--bg-surface);
@@ -1577,9 +1593,7 @@
       letter-spacing: .1em;
     }
 
-    /* ═══════════════════════════════════════════════
-   PAGE: DASHBOARD APP
-═══════════════════════════════════════════════ */
+    /* APP */
     #page-app {
       display: none;
     }
@@ -1590,7 +1604,6 @@
       overflow: hidden;
     }
 
-    /* SIDEBAR */
     .sidebar {
       width: 256px;
       flex-shrink: 0;
@@ -1756,7 +1769,6 @@
       color: #475569;
     }
 
-    /* APP MAIN */
     .app-main {
       flex: 1;
       display: flex;
@@ -1825,7 +1837,6 @@
       border: 1.5px solid var(--bg-lowest);
     }
 
-    /* APP CONTENT */
     .app-content {
       flex: 1;
       overflow-y: auto;
@@ -1841,7 +1852,6 @@
       display: block;
     }
 
-    /* STAT CARDS */
     .stat-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1911,7 +1921,6 @@
       color: #ff6b7a;
     }
 
-    /* CHARTS ROW */
     .charts-row {
       display: grid;
       grid-template-columns: 2fr 3fr;
@@ -2037,7 +2046,6 @@
       color: var(--primary);
     }
 
-    /* TRANSACTION TABLE */
     .tx-table-wrap {
       border-radius: 20px;
       overflow: hidden;
@@ -2137,41 +2145,6 @@
       display: inline-block;
     }
 
-    .status-ok .status-dot {
-      background: var(--tertiary);
-    }
-
-    .status-bad .status-dot {
-      background: #ff4757;
-      animation: pulse-dot 1.5s infinite;
-    }
-
-    .status-ai .status-dot {
-      background: var(--tertiary);
-      animation: spin .8s linear infinite;
-    }
-
-    .status-wrap {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--ff-mono);
-      font-size: 10px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    /* LOADING SKELETON */
-    .skel-row td {
-      padding: 16px 28px;
-    }
-
-    .skel-bar {
-      height: 12px;
-      border-radius: 4px;
-    }
-
-    /* UPLOAD TAB */
     .upload-zone {
       border: 2px dashed rgba(67, 70, 84, .4);
       border-radius: 20px;
@@ -2213,7 +2186,6 @@
       margin-top: 24px;
     }
 
-    /* AI RESULT PANEL */
     .ai-panel {
       background: var(--bg-container-low);
       border: 1px solid rgba(79, 124, 255, .2);
@@ -2253,15 +2225,14 @@
 
     @keyframes ai-sweep {
       0% {
-        transform: translateX(-100%);
+        transform: translateX(-100%)
       }
 
       100% {
-        transform: translateX(350%);
+        transform: translateX(350%)
       }
     }
 
-    /* REC CARDS */
     .rec-card {
       background: var(--bg-container);
       border: 1px solid rgba(67, 70, 84, .12);
@@ -2299,7 +2270,6 @@
       margin-top: 8px;
     }
 
-    /* SUB ITEM */
     .sub-item {
       display: flex;
       align-items: center;
@@ -2338,7 +2308,6 @@
       text-align: right;
     }
 
-    /* BUDGET */
     .budget-bar-wrap {
       margin-bottom: 18px;
     }
@@ -2373,7 +2342,6 @@
       transition: width .6s ease;
     }
 
-    /* REPORT BOX */
     .report-box {
       background: var(--bg-container);
       border: 1px solid rgba(67, 70, 84, .12);
@@ -2386,7 +2354,6 @@
       font-family: var(--ff-body);
     }
 
-    /* ALERTS */
     .alert-strip {
       display: flex;
       align-items: center;
@@ -2421,7 +2388,6 @@
       color: var(--tertiary);
     }
 
-    /* MODAL */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -2466,7 +2432,6 @@
       margin-top: 20px;
     }
 
-    /* FORM ELEMENTS */
     input[type=text],
     input[type=number],
     input[type=email],
@@ -2510,57 +2475,122 @@
       margin-bottom: 5px;
     }
 
-    /* GLOBAL ALERT BAR */
     #global-alerts {
       padding: 0 40px;
     }
 
-    /* ═══ RESPONSIVE ═══ */
-    /* mobile nav hidden on desktop by default */
-    .mobile-nav { display: none; }
+    .mobile-nav {
+      display: none;
+    }
 
+    /* RESPONSIVE */
     @media(max-width:1100px) {
-      .stat-row { grid-template-columns: repeat(2, 1fr); }
-      .charts-row { grid-template-columns: 1fr; }
-      .land-footer-grid { grid-template-columns: 1fr 1fr; }
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-row {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .charts-row {
+        grid-template-columns: 1fr
+      }
+
+      .land-footer-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
     }
 
     @media(max-width:768px) {
-      /* Landing */
-      .land-nav { padding: 0 20px; }
-      .land-nav-links { display: none; }
-      .land-nav-actions .btn-ghost { display: none; }
-      .section { padding: 48px 20px; }
-      .hero { padding: 90px 20px 48px; }
-      .hero-card { display: none; }
-      .hero-ctas { flex-direction: column; gap: 12px; }
-      .hero-ctas button { width: 100%; }
-      .features-grid { grid-template-columns: 1fr; }
-      .hiw-steps { flex-direction: column; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .testi-grid { grid-template-columns: 1fr; }
-      .land-footer-grid { grid-template-columns: 1fr; gap: 32px; }
-      .cta-banner { margin: 0 20px 60px; padding: 40px 24px; }
+      .land-nav {
+        padding: 0 20px
+      }
 
-      /* Login */
-      .login-right { display: none; }
-      .login-left { width: 100%; padding: 32px 24px; }
-      .login-h1 { font-size: 32px; }
-      .form-row-2 { grid-template-columns: 1fr; }
+      .land-nav-links {
+        display: none
+      }
 
-      /* App: hide sidebar, show bottom nav */
-      .sidebar { display: none; }
-      .app-layout { flex-direction: column; }
+      .land-nav-actions .btn-ghost {
+        display: none
+      }
+
+      .section {
+        padding: 48px 20px
+      }
+
+      .hero {
+        padding: 90px 20px 48px
+      }
+
+      .hero-card {
+        display: none
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        gap: 12px
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hiw-steps {
+        flex-direction: column
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr
+      }
+
+      .testi-grid {
+        grid-template-columns: 1fr
+      }
+
+      .land-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px
+      }
+
+      .cta-banner {
+        margin: 0 20px 60px;
+        padding: 40px 24px
+      }
+
+      .login-right {
+        display: none
+      }
+
+      .login-left {
+        width: 100%;
+        padding: 32px 24px
+      }
+
+      .login-h1 {
+        font-size: 32px
+      }
+
+      .form-row-2 {
+        grid-template-columns: 1fr
+      }
+
+      .sidebar {
+        display: none
+      }
+
       .mobile-nav {
         display: flex;
         position: fixed;
-        bottom: 0; left: 0; right: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         background: var(--bg-surface);
         border-top: 1px solid var(--outline-var);
         z-index: 999;
         padding: 6px 0 max(6px, env(safe-area-inset-bottom));
       }
+
       .mobile-nav-item {
         flex: 1;
         display: flex;
@@ -2576,83 +2606,124 @@
         -webkit-tap-highlight-color: transparent;
         transition: color .15s;
       }
-      .mobile-nav-item .material-symbols-outlined { font-size: 22px; }
-      .mobile-nav-item.active { color: var(--primary); }
-      .mobile-nav-item.active .material-symbols-outlined {
-        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+
+      .mobile-nav-item .material-symbols-outlined {
+        font-size: 22px
       }
 
-      /* Topbar */
-      .app-topbar { padding: 0 16px; height: 56px; }
-      .topbar-title { font-size: 16px; }
-      .topbar-right .btn-ghost { display: none; }
-      .topbar-right .btn-primary { padding: 8px 12px; font-size: 12px; gap: 4px; }
-      .topbar-right .btn-primary span { display: none; }
+      .mobile-nav-item.active {
+        color: var(--primary)
+      }
 
-      /* Content */
-      .app-content { padding-bottom: 80px; }
-      .tab-panel { padding: 20px 16px; }
-      .stat-row { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .stat-card { padding: 16px; }
-      .stat-val { font-size: 20px; }
-      .charts-row { grid-template-columns: 1fr; gap: 16px; }
-      .chart-card { padding: 20px 16px; }
+      .mobile-nav-item.active .material-symbols-outlined {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24
+      }
 
-      /* Modal */
-      .modal { width: calc(100vw - 32px); padding: 24px 20px; max-height: 90vh; overflow-y: auto; }
-      .modal-form-grid { grid-template-columns: 1fr; }
+      .app-topbar {
+        padding: 0 16px;
+        height: 56px
+      }
 
-      /* Tables scroll on mobile */
-      .tx-table-wrap { overflow-x: auto; }
-      table { min-width: 600px; }
+      .topbar-title {
+        font-size: 16px
+      }
+
+      .topbar-right .btn-ghost {
+        display: none
+      }
+
+      .topbar-right .btn-primary {
+        padding: 8px 12px;
+        font-size: 12px;
+        gap: 4px
+      }
+
+      .topbar-right .btn-primary span {
+        display: none
+      }
+
+      .app-content {
+        padding-bottom: 80px
+      }
+
+      .tab-panel {
+        padding: 20px 16px
+      }
+
+      .stat-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px
+      }
+
+      .stat-card {
+        padding: 16px
+      }
+
+      .stat-val {
+        font-size: 20px
+      }
+
+      .charts-row {
+        grid-template-columns: 1fr;
+        gap: 16px
+      }
+
+      .modal {
+        width: calc(100vw - 32px);
+        padding: 24px 20px;
+        max-height: 90vh;
+        overflow-y: auto
+      }
+
+      .modal-form-grid {
+        grid-template-columns: 1fr
+      }
+
+      .tx-table-wrap {
+        overflow-x: auto
+      }
+
+      table {
+        min-width: 600px
+      }
     }
 
     @media(max-width:400px) {
-      .stat-row { grid-template-columns: 1fr; }
+      .stat-row {
+        grid-template-columns: 1fr
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ═══════════════════════════════════════════
-     PAGE 1: LANDING
-═══════════════════════════════════════════ -->
+  <!-- ═══════════════════════════ PAGE: LANDING ═══════════════════════════ -->
   <div id="page-landing" class="page active">
-
-    <!-- NAV -->
     <nav class="land-nav" id="land-nav">
       <div class="logo" onclick="goTo('landing')">SpendAI</div>
       <div class="land-nav-links">
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#about">About</a>
+        <a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#about">About</a>
       </div>
       <div class="land-nav-actions">
         <button class="btn btn-ghost" onclick="goTo('login')">Login</button>
         <button class="btn btn-primary" onclick="goTo('login')">Start Free Trial</button>
       </div>
     </nav>
-
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-bg">
         <div class="hero-blob hero-blob-1"></div>
         <div class="hero-blob hero-blob-2"></div>
         <div class="hero-grid"></div>
       </div>
-      <div class="hero-eyebrow">
-        <span></span> AI-Powered Finance Intelligence
-      </div>
+      <div class="hero-eyebrow"><span></span> AI-Powered Finance Intelligence</div>
       <h1 class="syne">Your Company's Spending,<br><span class="accent">Finally Intelligent.</span></h1>
-      <p>AI-powered expense tracking, anomaly detection, and cost-saving recommendations — all in one dashboard.
-        Built for finance teams who demand precision.</p>
+      <p>AI-powered expense tracking, anomaly detection, and cost-saving recommendations — all in one dashboard. Built
+        for finance teams who demand precision.</p>
       <div class="hero-ctas">
-        <button class="btn btn-primary" onclick="goTo('login')" style="padding:14px 32px;font-size:15px;">Try
-          Free for 14 Days</button>
-
+        <button class="btn btn-primary" onclick="goTo('login')" style="padding:14px 32px;font-size:15px;">Try Free for
+          14 Days</button>
       </div>
-      <!-- Mini dashboard mockup -->
       <div class="hero-card fade-up">
         <div class="hero-card-top">
           <div style="font-family:var(--ff-head);font-size:17px;font-weight:700;">Financial Dashboard</div>
@@ -2697,21 +2768,15 @@
         </div>
       </div>
     </section>
-
-    <!-- TRUST BAR -->
     <div class="trust-bar">
       <p>Trusted by finance teams at</p>
       <div class="trust-logos">
-        <span class="trust-logo">Razorpay</span>
-        <span class="trust-logo">Zepto</span>
-        <span class="trust-logo">CRED</span>
-        <span class="trust-logo">Meesho</span>
-        <span class="trust-logo">upGrad</span>
-        <span class="trust-logo">Groww</span>
+        <span class="trust-logo">Razorpay</span><span class="trust-logo">Zepto</span><span
+          class="trust-logo">CRED</span>
+        <span class="trust-logo">Meesho</span><span class="trust-logo">upGrad</span><span
+          class="trust-logo">Groww</span>
       </div>
     </div>
-
-    <!-- FEATURES -->
     <section class="section" id="features">
       <span class="section-eyebrow">What We Do</span>
       <h2 class="section-title syne">Brutal Precision<br>in every transaction.</h2>
@@ -2719,17 +2784,16 @@
         anomalies.</p>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon blue"><span class="material-symbols-outlined icon-fill">category</span>
-          </div>
+          <div class="feature-icon blue"><span class="material-symbols-outlined icon-fill">category</span></div>
           <h3>AI Categorization</h3>
-          <p>Neural networks automatically tag every expense with no manual tagging required. 98.2% accuracy
-            based on transaction data.</p>
+          <p>Neural networks automatically tag every expense with no manual tagging required. 98.2% accuracy based on
+            transaction data.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon teal"><span class="material-symbols-outlined">emergency_home</span></div>
           <h3>Anomaly Detection</h3>
-          <p>Instantly flag duplicate invoices, fraudulent charges, or unexpected spikes in tool usage before
-            they compound.</p>
+          <p>Instantly flag duplicate invoices, fraudulent charges, or unexpected spikes in tool usage before they
+            compound.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon purple"><span class="material-symbols-outlined">subscriptions</span></div>
@@ -2738,17 +2802,16 @@
             automatically.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon blue"><span class="material-symbols-outlined icon-fill">psychology</span>
-          </div>
+          <div class="feature-icon blue"><span class="material-symbols-outlined icon-fill">psychology</span></div>
           <h3>Cost Advisor</h3>
-          <p>SpendAI suggests vendor alternatives or plan downgrades based on your actual usage versus invoice
-            status.</p>
+          <p>SpendAI suggests vendor alternatives or plan downgrades based on your actual usage versus invoice status.
+          </p>
         </div>
         <div class="feature-card">
           <div class="feature-icon teal"><span class="material-symbols-outlined">analytics</span></div>
           <h3>Executive Reports</h3>
-          <p>Ready-to-present financial narratives delivered weekly. No more manual Excel exports or
-            slide-deck generation.</p>
+          <p>Ready-to-present financial narratives delivered weekly. No more manual Excel exports or slide-deck
+            generation.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon purple"><span class="material-symbols-outlined">notification_important</span></div>
@@ -2757,8 +2820,6 @@
         </div>
       </div>
     </section>
-
-    <!-- HOW IT WORKS -->
     <section class="hiw-section" id="about">
       <div style="text-align:center;">
         <span class="section-eyebrow" style="display:inline-block;">Zero-Effort Integration</span>
@@ -2768,25 +2829,20 @@
         <div class="hiw-step">
           <div class="hiw-num">01</div>
           <h3>Upload CSV</h3>
-          <p>Directly import bank statements or connect via fluent integrations. We handle the messy column
-            mapping.</p>
+          <p>Directly import bank statements or connect via integrations. We handle the messy column mapping.</p>
         </div>
         <div class="hiw-step">
           <div class="hiw-num">02</div>
           <h3>AI Analyses</h3>
-          <p>Our engine scans for anomalies, categories, and tax-deductible items in seconds using Claude AI.
-          </p>
+          <p>Our engine scans for anomalies, categories, and tax-deductible items in seconds using Claude AI.</p>
         </div>
         <div class="hiw-step">
           <div class="hiw-num">03</div>
           <h3>Get Recommendations</h3>
-          <p>Receive a prioritised list of actions to reduce overhead immediately with estimated savings in
-            rupees.</p>
+          <p>Receive a prioritised list of actions to reduce overhead immediately with estimated savings in rupees.</p>
         </div>
       </div>
     </section>
-
-    <!-- PRICING -->
     <section class="section" id="pricing" style="text-align:center;">
       <span class="section-eyebrow" style="display:inline-block;">Pricing</span>
       <h2 class="section-title syne">Built for scale.<br>Priced for growth.</h2>
@@ -2796,16 +2852,13 @@
           <div class="plan-price syne"><sup>₹</sup>999<span>/mo</span></div>
           <div class="plan-desc">Up to 5 users. Perfect for early-stage startups.</div>
           <div class="plan-features">
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>500
-              transactions/month</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>AI
-              Categorization</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Basic
-              Anomaly Detection</div>
-            <div class="plan-feature off"><span class="material-symbols-outlined">cancel</span>Cost Advisor
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>500 transactions/month
             </div>
-            <div class="plan-feature off"><span class="material-symbols-outlined">cancel</span>API Access
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>AI Categorization</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Basic Anomaly Detection
             </div>
+            <div class="plan-feature off"><span class="material-symbols-outlined">cancel</span>Cost Advisor</div>
+            <div class="plan-feature off"><span class="material-symbols-outlined">cancel</span>API Access</div>
           </div>
           <button class="btn btn-ghost" style="width:100%;justify-content:center;padding:12px;"
             onclick="goTo('login')">Choose Starter</button>
@@ -2816,16 +2869,13 @@
           <div class="plan-price syne"><sup>₹</sup>2,999<span>/mo</span></div>
           <div class="plan-desc">Unlimited users. Full AI suite for growing teams.</div>
           <div class="plan-features">
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Unlimited
-              transactions</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Full AI
-              Suite</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Advanced
-              Cost Advisor</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Priority
-              Support</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>API Access
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Unlimited transactions
             </div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Full AI Suite</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Advanced Cost Advisor
+            </div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Priority Support</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>API Access</div>
           </div>
           <button class="btn btn-primary" style="width:100%;justify-content:center;padding:13px;"
             onclick="goTo('login')">Get Started with Pro</button>
@@ -2835,34 +2885,27 @@
           <div class="plan-price syne" style="font-size:28px;letter-spacing:-.02em;">Custom</div>
           <div class="plan-desc">For large organisations with complex structures.</div>
           <div class="plan-features">
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Custom
-              integrations</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Dedicated
-              Manager</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>SLA
-              Guarantees</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>On-premise
-              option</div>
-            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Custom AI
-              models</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Custom integrations
+            </div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Dedicated Manager</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>SLA Guarantees</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>On-premise option</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Custom AI models</div>
           </div>
           <button class="btn btn-ghost" style="width:100%;justify-content:center;padding:12px;"
             onclick="goTo('login')">Contact Sales</button>
         </div>
       </div>
     </section>
-
-    <!-- TESTIMONIALS -->
     <section class="section" style="padding-top:20px;">
       <div class="testi-grid">
         <div class="testi-card ledger-glow">
           <div class="quote">
-            <p>SpendAI flagged a redundant SaaS subscription within 48 hours of setup. We're saving ₹12L
-              annually right away — no analyst time spent.</p>
+            <p>SpendAI flagged a redundant SaaS subscription within 48 hours of setup. We're saving ₹12L annually right
+              away — no analyst time spent.</p>
           </div>
           <div class="testi-author">
-            <div class="testi-avatar" style="background:rgba(79,124,255,.15);color:var(--primary-dim);">AK
-            </div>
+            <div class="testi-avatar" style="background:rgba(79,124,255,.15);color:var(--primary-dim);">AK</div>
             <div>
               <div class="testi-name">Ananya Kapoor</div>
               <div class="testi-role">CFO, Series B Startup</div>
@@ -2871,8 +2914,8 @@
         </div>
         <div class="testi-card ledger-glow">
           <div class="quote">
-            <p>The AI categorization is the best I've seen. Our month-end closing time was cut by nearly
-              60%. The reports write themselves.</p>
+            <p>The AI categorization is the best I've seen. Our month-end closing time was cut by nearly 60%. The
+              reports write themselves.</p>
           </div>
           <div class="testi-author">
             <div class="testi-avatar" style="background:rgba(123,94,167,.15);color:#c09bf0;">SV</div>
@@ -2884,8 +2927,8 @@
         </div>
         <div class="testi-card ledger-glow">
           <div class="quote">
-            <p>Finally a finance tool that doesn't look like it was built in 1998. The UI is incredible and
-              highly functional — our team actually uses it.</p>
+            <p>Finally a finance tool that doesn't look like it was built in 1998. The UI is incredible and highly
+              functional — our team actually uses it.</p>
           </div>
           <div class="testi-author">
             <div class="testi-avatar" style="background:rgba(40,223,181,.1);color:var(--tertiary);">ML</div>
@@ -2897,119 +2940,102 @@
         </div>
       </div>
     </section>
-
-    <!-- CTA BANNER -->
     <div class="cta-banner">
       <h2 class="syne">Stop Guessing.<br>Start Saving.</h2>
       <p>Join 500+ high-growth companies using SpendAI to master their financial future.</p>
-      <button class="btn btn-primary" onclick="goTo('login')" style="padding:16px 40px;font-size:15px;">Get
-        Started Free</button>
+      <button class="btn btn-primary" onclick="goTo('login')" style="padding:16px 40px;font-size:15px;">Get Started
+        Free</button>
     </div>
-
-    <!-- FOOTER -->
     <footer class="land-footer">
       <div class="land-footer-grid">
         <div>
           <div class="footer-logo">SpendAI</div>
-          <p class="footer-tagline">Brutal Precision in Finance. The editorial intelligence layer for
-            high-growth Indian companies.</p>
+          <p class="footer-tagline">Brutal Precision in Finance. The editorial intelligence layer for high-growth Indian
+            companies.</p>
         </div>
         <div class="footer-col">
-          <h4>Product</h4>
-          <a href="#">Features</a><a href="#">Pricing</a><a href="#">Changelog</a><a href="#">Roadmap</a>
+          <h4>Product</h4><a href="#">Features</a><a href="#">Pricing</a><a href="#">Changelog</a><a
+            href="#">Roadmap</a>
         </div>
         <div class="footer-col">
-          <h4>Company</h4>
-          <a href="#">About</a><a href="#">Blog</a><a href="#">AI Ethics</a><a href="#">News</a>
+          <h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">AI Ethics</a><a href="#">News</a>
         </div>
         <div class="footer-col">
-          <h4>Support</h4>
-          <a href="#">Help Center</a><a href="#">Docs</a><a href="#">Privacy</a><a href="#">Terms</a>
+          <h4>Support</h4><a href="#">Help Center</a><a href="#">Docs</a><a href="#">Privacy</a><a href="#">Terms</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">© 2024 SpendAI. Brutal Precision in Finance.</span>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--tertiary);"></span>
-          <span
+        <span class="footer-copy">© 2025 SpendAI. Brutal Precision in Finance.</span>
+        <div style="display:flex;align-items:center;gap:6px;"><span
+            style="width:6px;height:6px;border-radius:50%;background:var(--tertiary);"></span><span
             style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--outline);">All
-            Systems Operational</span>
-        </div>
+            Systems Operational</span></div>
       </div>
     </footer>
-  </div><!-- /page-landing -->
+  </div>
 
-
-  <!-- ═══════════════════════════════════════════
-     PAGE 2: LOGIN / SIGNUP
-═══════════════════════════════════════════ -->
+  <!-- ═══════════════════════════ PAGE: LOGIN ═══════════════════════════ -->
   <div id="page-login" class="page">
     <div class="login-left">
       <div class="login-logo" onclick="goTo('landing')">SpendAI</div>
       <div class="login-body">
         <h1 class="login-h1 syne">Precision<br>access.</h1>
         <p class="login-sub">Connect your corporate intelligence to the Obsidian core.</p>
-
         <div class="login-tabs">
-          <button class="login-tab active" onclick="switchTab('login')">Login</button>
-          <button class="login-tab" onclick="switchTab('signup')">Signup</button>
+          <button class="login-tab active" onclick="switchLoginTab('login',event)">Login</button>
+          <button class="login-tab" onclick="switchLoginTab('signup',event)">Signup</button>
         </div>
-
-        <!-- LOGIN FORM -->
         <div class="login-form active" id="form-login">
-          <button class="sso-btn" onclick="doLogin()" style="background:var(--bg-container-high);border:1.5px solid var(--tertiary);color:var(--tertiary);gap:10px;">
-            <span class="material-symbols-outlined" style="font-size:18px;">bolt</span>
-            Use Demo Account
+          <button class="sso-btn" onclick="doDemo()"
+            style="background:var(--bg-container-high);border:1.5px solid var(--tertiary);color:var(--tertiary);gap:10px;">
+            <span class="material-symbols-outlined" style="font-size:18px;">bolt</span>Use Demo Account
           </button>
           <div class="divider">
-            <div class="divider-line"></div>
-            <span class="divider-text">Or Secure Mail</span>
+            <div class="divider-line"></div><span class="divider-text">Or Secure Mail</span>
             <div class="divider-line"></div>
           </div>
-          <div class="form-group">
-            <label>Work Email</label>
-            <input type="email" placeholder="name@company.ai" id="login-email">
+          <div id="auth-error"
+            style="display:none;background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.2);border-radius:8px;padding:10px 14px;font-size:13px;color:#ff6b7a;">
           </div>
+          <div class="form-group"><label>Work Email</label><input type="email" placeholder="name@company.ai"
+              id="login-email"></div>
           <div class="form-group">
-            <div class="form-label-row">
-              <label>Password</label>
-              <a href="#" class="forgot">Forgot password?</a>
-            </div>
+            <div class="form-label-row"><label>Password</label><a href="#" class="forgot"
+                onclick="doForgotPassword(event)">Forgot?</a></div>
             <input type="password" placeholder="••••••••" id="login-pass">
           </div>
-          <button class="btn-submit" onclick="doLogin()">Sign In</button>
-          <p class="login-switch">New to the precision? <a href="#" onclick="switchTab('signup')">Start free
-              trial</a></p>
+          <button class="btn-submit" id="btn-signin" onclick="doSignIn()">Sign In</button>
+          <p class="login-switch">New here? <a href="#" onclick="switchLoginTab('signup',event)">Start free trial</a>
+          </p>
         </div>
-
-        <!-- SIGNUP FORM -->
         <div class="login-form" id="form-signup">
-
-          <div class="form-row-2">
-            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Arjun Sharma">
-            </div>
-            <div class="form-group"><label>Company</label><input type="text" placeholder="Acme Corp"></div>
-          </div>
-          <div class="form-group"><label>Work Email</label><input type="email" placeholder="name@company.ai">
+          <div id="signup-error"
+            style="display:none;background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.2);border-radius:8px;padding:10px 14px;font-size:13px;color:#ff6b7a;">
           </div>
           <div class="form-row-2">
-            <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••">
-            </div>
-            <div class="form-group"><label>Confirm</label><input type="password" placeholder="••••••••">
-            </div>
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Arjun Sharma"
+                id="signup-name"></div>
+            <div class="form-group"><label>Company</label><input type="text" placeholder="Acme Corp"
+                id="signup-company"></div>
           </div>
-          <button class="btn-submit" onclick="doLogin()">Create Account</button>
-          <p class="login-switch">Already have an account? <a href="#" onclick="switchTab('login')">Sign
+          <div class="form-group"><label>Work Email</label><input type="email" placeholder="name@company.ai"
+              id="signup-email"></div>
+          <div class="form-row-2">
+            <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••"
+                id="signup-pass"></div>
+            <div class="form-group"><label>Confirm</label><input type="password" placeholder="••••••••"
+                id="signup-confirm"></div>
+          </div>
+          <button class="btn-submit" id="btn-signup" onclick="doSignUp()">Create Account</button>
+          <p class="login-switch">Already have an account? <a href="#" onclick="switchLoginTab('login',event)">Sign
               in</a></p>
         </div>
       </div>
       <div class="login-footer">
-        <span>© 2024 SpendAI. Brutal Precision.</span>
+        <span>© 2025 SpendAI.</span>
         <div class="login-footer-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
       </div>
     </div>
-
-    <!-- RIGHT PANEL -->
     <div class="login-right">
       <div class="login-right-bg">
         <div class="login-right-blob login-right-blob-1"></div>
@@ -3026,11 +3052,8 @@
           </div>
           <div class="lp-status">
             <div class="lp-status-label">Global Status</div>
-            <div class="lp-status-val">
-              <span style="width:8px;height:8px;border-radius:50%;background:var(--tertiary);"
-                class="pulse-anim"></span>
-              Claude AI Active
-            </div>
+            <div class="lp-status-val"><span style="width:8px;height:8px;border-radius:50%;background:var(--tertiary);"
+                class="pulse-anim"></span>Claude AI Active</div>
           </div>
         </div>
         <div class="lp-bento">
@@ -3045,17 +3068,14 @@
               <div class="lp-mini-bar" style="height:58%;"></div>
               <div class="lp-mini-bar" style="height:62%;"></div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="lp-card-num syne">$142,805.00</span>
-              <span class="chip chip-teal">+12.4% Est. Savings</span>
-            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span
+                class="lp-card-num syne">$142,805.00</span><span class="chip chip-teal">+12.4% Est. Savings</span></div>
           </div>
           <div class="lp-side-card">
             <div>
               <div class="lp-side-icon"><span class="material-symbols-outlined icon-fill"
                   style="font-size:18px;">psychology</span></div>
-              <p class="lp-side-text">AI detected 4 overlapping Adobe licenses in "Marketing-West" node.
-              </p>
+              <p class="lp-side-text">AI detected 4 overlapping Adobe licenses in "Marketing-West" node.</p>
             </div>
             <div class="lp-side-action">Resolve Now →</div>
           </div>
@@ -3085,92 +3105,79 @@
         </div>
       </div>
     </div>
-  </div><!-- /page-login -->
+  </div>
 
-
-  <!-- ═══════════════════════════════════════════
-     PAGE 3: DASHBOARD APP
-═══════════════════════════════════════════ -->
+  <!-- ═══════════════════════════ PAGE: APP ═══════════════════════════ -->
   <div id="page-app" class="page">
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-logo-wrap">
         <div class="sidebar-logo">SpendAI</div>
-        <div class="sidebar-ai-badge">
-          <span class="pulse-anim"></span>
-          <span class="sidebar-ai-text">Claude AI Active</span>
-        </div>
+        <div class="sidebar-ai-badge"><span class="pulse-anim"></span><span class="sidebar-ai-text">Claude AI
+            Active</span></div>
       </div>
       <nav class="nav-section" id="sidebar-nav">
-        <div class="nav-item active" onclick="switchTab2('dashboard')">
-          <span class="material-symbols-outlined">dashboard</span>Dashboard
+        <div class="nav-item active" onclick="switchTab2('dashboard',event)"><span
+            class="material-symbols-outlined">dashboard</span>Dashboard</div>
+        <div class="nav-item" onclick="switchTab2('import',event)"><span
+            class="material-symbols-outlined">upload_file</span>Import Data</div>
+        <div class="nav-item" onclick="switchTab2('anomaly',event)"><span
+            class="material-symbols-outlined">emergency_home</span>Anomaly Detector</div>
+        <div class="nav-item" onclick="switchTab2('subscriptions',event)"><span
+            class="material-symbols-outlined">subscriptions</span>Subscriptions</div>
+        <div class="nav-item" onclick="switchTab2('advisor',event)"><span class="material-symbols-outlined"
+            style="color:#c09bf0;">psychology</span>Cost Advisor</div>
+        <div class="nav-item" onclick="switchTab2('report',event)"><span
+            class="material-symbols-outlined">analytics</span>AI Report</div>
+        <div class="nav-item" onclick="switchTab2('budgets',event)"><span
+            class="material-symbols-outlined">notification_important</span>Budget Alerts</div>
+        <div class="nav-item" onclick="switchTab2('approvals',event)"><span
+            class="material-symbols-outlined">task_alt</span>Approvals <span id="pending-badge"
+            style="display:none;background:var(--error-cont);color:var(--error);font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:100px;margin-left:4px;">0</span>
         </div>
-        <div class="nav-item" onclick="switchTab2('import')">
-          <span class="material-symbols-outlined">upload_file</span>Import Data
-        </div>
-        <div class="nav-item" onclick="switchTab2('anomaly')">
-          <span class="material-symbols-outlined">emergency_home</span>Anomaly Detector
-        </div>
-        <div class="nav-item" onclick="switchTab2('subscriptions')">
-          <span class="material-symbols-outlined">subscriptions</span>Subscriptions
-        </div>
-        <div class="nav-item" onclick="switchTab2('advisor')">
-          <span class="material-symbols-outlined" style="color:#c09bf0;">psychology</span>Cost Advisor
-        </div>
-        <div class="nav-item" onclick="switchTab2('report')">
-          <span class="material-symbols-outlined">analytics</span>AI Report
-        </div>
-        <div class="nav-item" onclick="switchTab2('budgets')">
-          <span class="material-symbols-outlined">notification_important</span>Budget Alerts
-        </div>
+        <div class="nav-item" onclick="switchTab2('gst',event)"><span
+            class="material-symbols-outlined">receipt_long</span>GST Report</div>
       </nav>
       <div class="sidebar-bottom">
-        <button class="sidebar-run-ai" onclick="runAI()">
-          <span class="material-symbols-outlined icon-fill" style="font-size:16px;">auto_awesome</span>
-          Run AI Analysis
-        </button>
+        <button class="sidebar-run-ai" onclick="runAI()"><span class="material-symbols-outlined icon-fill"
+            style="font-size:16px;">auto_awesome</span>Run AI Analysis</button>
         <div class="sidebar-settings">
-          <div class="nav-item" onclick="goTo('landing')"><span class="material-symbols-outlined">logout</span>Logout
-          </div>
+          <div class="nav-item" onclick="goTo('pricing')"><span class="material-symbols-outlined"
+              style="color:var(--tertiary);">workspace_premium</span>Upgrade Plan</div>
+          <div class="nav-item" onclick="doLogout()"><span class="material-symbols-outlined">logout</span>Logout</div>
         </div>
         <div class="user-block">
-          <div class="user-avatar">AS</div>
+          <div class="user-avatar" id="sidebar-avatar">AS</div>
           <div>
-            <div class="user-name">Arjun Sharma</div>
-            <div class="user-plan">Pro Plan</div>
+            <div class="user-name" id="sidebar-name">Arjun Sharma</div>
+            <div class="user-plan" id="sidebar-plan">Free Plan</div>
           </div>
         </div>
       </div>
     </aside>
-
-    <!-- APP MAIN -->
     <div class="app-main">
       <header class="app-topbar">
-        <div class="topbar-title syne" id="topbar-title">
-          Dashboard
-        </div>
+        <div class="topbar-title syne" id="topbar-title">Dashboard</div>
         <div class="topbar-right">
           <div id="alert-badge" style="display:none;" class="chip chip-red">0 Alerts</div>
+          <span id="plan-badge" onclick="goTo('pricing')"
+            style="font-family:var(--ff-mono);font-size:10px;letter-spacing:.08em;cursor:pointer;padding:4px 10px;border-radius:100px;background:rgba(79,124,255,.08);border:1px solid rgba(79,124,255,.15);color:var(--primary-dim);">Free</span>
           <div class="notif-btn" id="notif-btn"><span class="material-symbols-outlined"
               style="font-size:20px;">notifications_active</span>
             <div class="notif-dot" id="notif-dot" style="display:none;"></div>
           </div>
           <button class="btn btn-ghost" style="padding:9px 18px;font-size:13px;" onclick="openModal()">+ Add
             Transaction</button>
-          <button class="btn btn-primary" style="padding:9px 18px;font-size:13px;" onclick="runAI()">
-            <span class="material-symbols-outlined icon-fill" style="font-size:15px;">smart_toy</span>Run AI
-            Analysis
-          </button>
+          <button class="btn btn-primary" style="padding:9px 18px;font-size:13px;" onclick="runAI()"><span
+              class="material-symbols-outlined icon-fill" style="font-size:15px;">smart_toy</span>Run AI
+            Analysis</button>
         </div>
       </header>
-
       <div id="global-alerts" style="padding-top:12px;"></div>
-
       <div class="app-content">
 
-        <!-- ── DASHBOARD TAB ── -->
+        <!-- DASHBOARD TAB -->
         <div class="tab-panel active" id="tab-dashboard">
-          <div class="stat-row" id="stat-row">
+          <div class="stat-row">
             <div class="stat-card">
               <div class="stat-label">Total Spend Month</div>
               <div class="stat-val blue" id="s-total">₹0</div>
@@ -3192,13 +3199,12 @@
               <div class="stat-delta" id="s-save-d" style="color:var(--outline);">Run AI Advisor</div>
             </div>
           </div>
-
           <div class="charts-row">
             <div class="card">
               <div class="card-header"><span class="card-title">Spend by Category</span></div>
               <div class="card-body">
-                <div class="donut-wrap" style="height:180px;">
-                  <canvas id="donut-chart" width="180" height="180"></canvas>
+                <div class="donut-wrap" style="height:180px;"><canvas id="donut-chart" width="180"
+                    height="180"></canvas>
                   <div class="donut-center">
                     <div class="dc-label">Total</div>
                     <div class="dc-val" id="donut-center-val">₹0</div>
@@ -3208,32 +3214,25 @@
               </div>
             </div>
             <div class="card">
-              <div class="card-header">
-                <span class="card-title">Monthly Trend</span>
-                <div class="toggle-btns">
-                  <button class="toggle-btn active" onclick="setBarPeriod(6,this)">6M</button>
-                  <button class="toggle-btn" onclick="setBarPeriod(12,this)">12M</button>
-                </div>
+              <div class="card-header"><span class="card-title">Monthly Trend</span>
+                <div class="toggle-btns"><button class="toggle-btn active"
+                    onclick="setBarPeriod(6,this)">6M</button><button class="toggle-btn"
+                    onclick="setBarPeriod(12,this)">12M</button></div>
               </div>
               <div class="card-body">
                 <div class="chart-wrap"><canvas id="bar-chart"></canvas></div>
               </div>
             </div>
           </div>
-
           <div class="tx-table-wrap">
-            <div class="tx-table-header">
-              <span class="card-title">Recent Transactions</span>
-              <button class="btn btn-ghost" style="font-size:12px;padding:7px 14px;" onclick="exportCSV()">
-                <span class="material-symbols-outlined" style="font-size:15px;">download</span>Export
-                CSV
-              </button>
-            </div>
+            <div class="tx-table-header"><span class="card-title">Recent Transactions</span><button
+                class="btn btn-ghost" style="font-size:12px;padding:7px 14px;" onclick="exportCSV()"><span
+                  class="material-symbols-outlined" style="font-size:15px;">download</span>Export CSV</button></div>
             <div id="tx-table-body"></div>
           </div>
         </div>
 
-        <!-- ── IMPORT TAB ── -->
+        <!-- IMPORT TAB -->
         <div class="tab-panel" id="tab-import">
           <div class="card" style="margin-bottom:18px;">
             <div class="card-header"><span class="card-title">Import Expenses</span></div>
@@ -3246,10 +3245,8 @@
                 <input type="file" id="csv-input" accept=".csv" style="display:none" onchange="handleCSV(this)">
               </div>
               <div class="upload-actions">
-                <button class="btn btn-ghost" onclick="loadSample(15)">Load 15 Sample
-                  Transactions</button>
-                <button class="btn btn-ghost" onclick="loadSample(40)">Load 40 Sample
-                  Transactions</button>
+                <button class="btn btn-ghost" onclick="loadSample(15)">Load 15 Sample Transactions</button>
+                <button class="btn btn-ghost" onclick="loadSample(40)">Load 40 Sample Transactions</button>
               </div>
               <div id="csv-preview" style="display:none;margin-top:20px;">
                 <div
@@ -3257,18 +3254,16 @@
                   Data Preview</div>
                 <div id="csv-preview-table"></div>
                 <div style="display:flex;gap:10px;margin-top:16px;">
-                  <button class="btn btn-primary" onclick="importData()">
-                    <span class="material-symbols-outlined icon-fill" style="font-size:15px;">smart_toy</span>Import &
-                    Auto-Categorize with AI
-                  </button>
+                  <button class="btn btn-primary" onclick="importData()"><span
+                      class="material-symbols-outlined icon-fill" style="font-size:15px;">smart_toy</span>Import &
+                    Auto-Categorize with AI</button>
                   <button class="btn btn-ghost" onclick="importManual()">Import Without AI</button>
                 </div>
               </div>
               <div id="import-loading" style="display:none;margin-top:20px;">
                 <div class="ai-panel">
                   <div class="ai-panel-head"><span class="material-symbols-outlined icon-fill"
-                      style="font-size:16px;">smart_toy</span>Claude is categorizing your
-                    transactions...</div>
+                      style="font-size:16px;">smart_toy</span>Claude is categorizing your transactions...</div>
                   <div class="ai-loading">
                     <div class="ai-loading-fill"></div>
                   </div>
@@ -3289,7 +3284,7 @@
           </div>
         </div>
 
-        <!-- ── ANOMALY TAB ── -->
+        <!-- ANOMALY TAB -->
         <div class="tab-panel" id="tab-anomaly">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
             <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">Anomaly Detector</div>
@@ -3300,8 +3295,7 @@
           <div id="anomaly-loading" style="display:none;margin-bottom:16px;">
             <div class="ai-panel">
               <div class="ai-panel-head"><span class="material-symbols-outlined icon-fill"
-                  style="font-size:16px;">smart_toy</span>Claude is analyzing spending patterns...
-              </div>
+                  style="font-size:16px;">smart_toy</span>Claude is analyzing spending patterns...</div>
               <div class="ai-loading">
                 <div class="ai-loading-fill"></div>
               </div>
@@ -3316,11 +3310,10 @@
           <div id="anomaly-summary" style="margin-top:14px;"></div>
         </div>
 
-        <!-- ── SUBSCRIPTIONS TAB ── -->
+        <!-- SUBSCRIPTIONS TAB -->
         <div class="tab-panel" id="tab-subscriptions">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">Subscription Tracker
-            </div>
+            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">Subscription Tracker</div>
             <button class="btn btn-primary" onclick="analyzeSubs()"><span class="material-symbols-outlined icon-fill"
                 style="font-size:15px;">smart_toy</span>Analyze Subscriptions</button>
           </div>
@@ -3329,33 +3322,30 @@
               <div class="card-header"><span class="card-title">Active Subscriptions</span><span class="chip chip-blue"
                   id="sub-count-chip">0</span></div>
               <div id="sub-list">
-                <div style="padding:40px;text-align:center;color:var(--outline);font-size:13px;">Import
-                  data to detect subscriptions</div>
+                <div style="padding:40px;text-align:center;color:var(--outline);font-size:13px;">Import data to detect
+                  subscriptions</div>
               </div>
             </div>
             <div class="card">
               <div class="card-header"><span class="card-title">AI Insights</span></div>
               <div class="card-body" id="sub-insights">
-                <div style="color:var(--outline);font-size:13px;">Run analysis to get subscription
-                  insights</div>
+                <div style="color:var(--outline);font-size:13px;">Run analysis to get subscription insights</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ── ADVISOR TAB ── -->
+        <!-- ADVISOR TAB -->
         <div class="tab-panel" id="tab-advisor">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">Cost-Saving Advisor
-            </div>
+            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">Cost-Saving Advisor</div>
             <button class="btn btn-primary" onclick="getCostAdvice()"><span class="material-symbols-outlined icon-fill"
                 style="font-size:15px;">auto_awesome</span>Generate Recommendations</button>
           </div>
           <div id="advisor-loading" style="display:none;margin-bottom:16px;">
             <div class="ai-panel">
               <div class="ai-panel-head"><span class="material-symbols-outlined icon-fill"
-                  style="font-size:16px;">smart_toy</span>Claude is finding savings opportunities...
-              </div>
+                  style="font-size:16px;">smart_toy</span>Claude is finding savings opportunities...</div>
               <div class="ai-loading">
                 <div class="ai-loading-fill"></div>
               </div>
@@ -3364,31 +3354,26 @@
           <div id="recs-list">
             <div class="card">
               <div class="card-body" style="padding:48px;text-align:center;color:var(--outline);font-size:14px;">
-                <div style="font-size:32px;margin-bottom:12px;">💡</div>Click "Generate Recommendations"
-                for AI-powered cost-saving tips
+                <div style="font-size:32px;margin-bottom:12px;">💡</div>Click "Generate Recommendations" for AI-powered
+                cost-saving tips
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ── REPORT TAB ── -->
+        <!-- REPORT TAB -->
         <div class="tab-panel" id="tab-report">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">AI Executive Report
-            </div>
-            <div style="display:flex;gap:10px;">
-              <button class="btn btn-ghost" onclick="window.print()"><span class="material-symbols-outlined"
-                  style="font-size:15px;">print</span>Print</button>
-              <button class="btn btn-primary" onclick="generateReport()"><span
-                  class="material-symbols-outlined icon-fill" style="font-size:15px;">smart_toy</span>Generate
-                Report</button>
-            </div>
+            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">AI Executive Report</div>
+            <div style="display:flex;gap:10px;"><button class="btn btn-ghost" onclick="window.print()"><span
+                  class="material-symbols-outlined" style="font-size:15px;">print</span>Print</button><button
+                class="btn btn-primary" onclick="generateReport()"><span class="material-symbols-outlined icon-fill"
+                  style="font-size:15px;">smart_toy</span>Generate Report</button></div>
           </div>
           <div id="report-loading" style="display:none;margin-bottom:16px;">
             <div class="ai-panel">
               <div class="ai-panel-head"><span class="material-symbols-outlined icon-fill"
-                  style="font-size:16px;">edit_note</span>Claude is writing your executive summary...
-              </div>
+                  style="font-size:16px;">edit_note</span>Claude is writing your executive summary...</div>
               <div class="ai-loading">
                 <div class="ai-loading-fill"></div>
               </div>
@@ -3399,25 +3384,23 @@
                 style="font-family:var(--ff-mono);font-size:11px;color:var(--outline);"></span></div>
             <div class="card-body" id="report-body">
               <div style="padding:32px;text-align:center;color:var(--outline);font-size:14px;">
-                <div style="font-size:32px;margin-bottom:12px;">📄</div>Generate an AI-written narrative
-                summary for leadership review
+                <div style="font-size:32px;margin-bottom:12px;">📄</div>Generate an AI-written narrative summary for
+                leadership review
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ── BUDGETS TAB ── -->
+        <!-- BUDGETS TAB -->
         <div class="tab-panel" id="tab-budgets">
-          <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;margin-bottom:20px;">Budget
-            Alert Thresholds</div>
+          <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;margin-bottom:20px;">Budget Alert
+            Thresholds</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
             <div class="card">
               <div class="card-header"><span class="card-title">Set Category Budgets</span></div>
               <div class="card-body">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-                  <div>
-                    <label>Category</label>
-                    <select id="budget-cat">
+                  <div><label>Category</label><select id="budget-cat">
                       <option>SaaS / Software</option>
                       <option>Travel</option>
                       <option>Marketing</option>
@@ -3425,8 +3408,7 @@
                       <option>Operations</option>
                       <option>Infrastructure</option>
                       <option>Other</option>
-                    </select>
-                  </div>
+                    </select></div>
                   <div><label>Monthly Budget (₹)</label><input type="number" id="budget-amt" placeholder="50000"></div>
                 </div>
                 <button class="btn btn-primary" onclick="addBudget()" style="padding:10px 20px;font-size:13px;">Set
@@ -3443,22 +3425,262 @@
           </div>
         </div>
 
+        <!-- APPROVALS TAB -->
+        <div class="tab-panel" id="tab-approvals">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">Approval Workflow</div>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-ghost" onclick="filterApprovals('all')" id="af-all"
+                style="padding:8px 16px;font-size:12px;">All</button>
+              <button class="btn btn-tonal" onclick="filterApprovals('pending')" id="af-pending"
+                style="padding:8px 16px;font-size:12px;">Pending</button>
+              <button class="btn btn-ghost" onclick="filterApprovals('approved')" id="af-approved"
+                style="padding:8px 16px;font-size:12px;">Approved</button>
+              <button class="btn btn-ghost" onclick="filterApprovals('rejected')" id="af-rejected"
+                style="padding:8px 16px;font-size:12px;">Rejected</button>
+            </div>
+          </div>
+          <div id="approvals-summary"
+            style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+            <div class="stat-card">
+              <div class="stat-label">Pending</div>
+              <div class="stat-val" id="ap-pending-count" style="color:#ffd166;">0</div>
+              <div class="stat-sub" id="ap-pending-amt">₹0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Approved</div>
+              <div class="stat-val" id="ap-approved-count" style="color:var(--tertiary);">0</div>
+              <div class="stat-sub" id="ap-approved-amt">₹0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Rejected</div>
+              <div class="stat-val" id="ap-rejected-count" style="color:#ff6b7a;">0</div>
+              <div class="stat-sub" id="ap-rejected-amt">₹0</div>
+            </div>
+          </div>
+          <div class="tx-table-wrap" id="approvals-table">
+            <div style="padding:48px;text-align:center;color:var(--outline);font-size:14px;">
+              <div style="font-size:32px;margin-bottom:12px;">✅</div>Add transactions to manage approvals
+            </div>
+          </div>
+        </div>
+
+        <!-- GST TAB -->
+        <div class="tab-panel" id="tab-gst">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">GST Report</div>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-ghost" onclick="exportGSTCSV()" style="padding:10px 18px;font-size:13px;"><span
+                  class="material-symbols-outlined" style="font-size:15px;">download</span>Export GSTR CSV</button>
+              <button class="btn btn-primary" onclick="generateGSTReport()"><span
+                  class="material-symbols-outlined icon-fill" style="font-size:15px;">smart_toy</span>AI GST
+                Analysis</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+            <div class="stat-card">
+              <div class="stat-label">Total Base</div>
+              <div class="stat-val" id="gst-r-base">₹0</div>
+              <div class="stat-sub">Excl. GST</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">IGST Paid</div>
+              <div class="stat-val" id="gst-r-igst" style="color:#a29bfe;">₹0</div>
+              <div class="stat-sub">Inter-state</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">CGST Paid</div>
+              <div class="stat-val" id="gst-r-cgst" style="color:var(--primary-dim);">₹0</div>
+              <div class="stat-sub">Intra-state</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">SGST Paid</div>
+              <div class="stat-val" id="gst-r-sgst" style="color:var(--tertiary);">₹0</div>
+              <div class="stat-sub">Intra-state</div>
+            </div>
+          </div>
+          <div id="gst-ai-panel" style="display:none;margin-bottom:16px;">
+            <div class="ai-panel">
+              <div class="ai-panel-head"><span class="material-symbols-outlined icon-fill"
+                  style="font-size:16px;">smart_toy</span>Claude is analyzing GST data...</div>
+              <div class="ai-loading">
+                <div class="ai-loading-fill"></div>
+              </div>
+            </div>
+          </div>
+          <div id="gst-ai-result" style="display:none;margin-bottom:16px;"></div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">GST Transaction Register</span></div>
+            <div class="tx-table-wrap" id="gst-table">
+              <div style="padding:40px;text-align:center;color:var(--outline);font-size:13px;">Add transactions with GST
+                details to populate this register</div>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /app-content -->
     </div><!-- /app-main -->
   </div><!-- /page-app -->
 
+  <!-- ═══════════════════════════ PAGE: PRICING ═══════════════════════════ -->
+  <div id="page-pricing" class="page" style="min-height:100vh;background:var(--bg-lowest);padding:40px 24px;">
+    <div style="max-width:960px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:40px;">
+        <button onclick="goTo(currentUser ? 'app' : 'landing')" class="btn btn-ghost"
+          style="padding:8px 16px;font-size:13px;"><span class="material-symbols-outlined"
+            style="font-size:16px;">arrow_back</span> Back</button>
+        <div style="font-family:var(--ff-head);font-size:24px;font-weight:800;color:var(--primary);">SpendAI</div>
+      </div>
+      <div style="text-align:center;margin-bottom:48px;">
+        <div id="pricing-current-pill"
+          style="display:inline-flex;align-items:center;gap:8px;background:rgba(40,223,181,.08);border:1px solid rgba(40,223,181,.2);border-radius:100px;padding:6px 18px;font-family:var(--ff-mono);font-size:11px;color:var(--tertiary);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;">
+          <span
+            style="width:6px;height:6px;background:var(--tertiary);border-radius:50%;display:inline-block;"></span>Current
+          Plan: <span id="pricing-plan-label">Free</span>
+        </div>
+        <h1
+          style="font-family:var(--ff-head);font-size:clamp(28px,5vw,52px);font-weight:800;letter-spacing:-.03em;margin-bottom:12px;">
+          Choose Your Plan</h1>
+        <p style="color:var(--on-surface-var);font-size:15px;">Upgrade anytime. Downgrade anytime. No lock-ins.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px;"
+        id="pricing-cards-grid">
+        <div class="pricing-card" id="plan-card-starter">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price syne"><sup>₹</sup>999<span>/mo</span></div>
+          <div class="plan-desc">Up to 3 users. Perfect for early-stage startups.</div>
+          <div class="plan-features">
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>500 transactions/month
+            </div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>AI Categorization</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>GST Register</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Basic Anomaly Detection
+            </div>
+            <div class="plan-feature off"><span class="material-symbols-outlined">cancel</span>Approval Workflow</div>
+            <div class="plan-feature off"><span class="material-symbols-outlined">cancel</span>AI Cost Advisor</div>
+            <div class="plan-feature off"><span class="material-symbols-outlined">cancel</span>API Access</div>
+          </div>
+          <button class="btn btn-ghost" id="btn-starter" onclick="selectPlan('starter')"
+            style="width:100%;justify-content:center;padding:12px;margin-top:8px;">Choose Starter</button>
+        </div>
+        <div class="pricing-card featured" id="plan-card-pro">
+          <div class="pricing-badge">Most Popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price syne"><sup>₹</sup>2,999<span>/mo</span></div>
+          <div class="plan-desc">Unlimited users. Full AI suite for growing teams.</div>
+          <div class="plan-features">
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Unlimited transactions
+            </div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Full AI Suite</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>GST + ITC Advisor</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Approval Workflow</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Advanced Cost Advisor
+            </div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Priority Support</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>API Access</div>
+          </div>
+          <button class="btn btn-primary" id="btn-pro" onclick="selectPlan('pro')"
+            style="width:100%;justify-content:center;padding:13px;margin-top:8px;">Get Started with Pro</button>
+        </div>
+        <div class="pricing-card" id="plan-card-enterprise">
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-price syne" style="font-size:28px;letter-spacing:-.02em;">Custom</div>
+          <div class="plan-desc">For large organisations with complex structures.</div>
+          <div class="plan-features">
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Everything in Pro</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Custom integrations
+            </div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Dedicated Manager</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>SLA Guarantees</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>On-premise option</div>
+            <div class="plan-feature"><span class="material-symbols-outlined">check_circle</span>Custom AI models</div>
+          </div>
+          <button class="btn btn-ghost" id="btn-enterprise" onclick="selectPlan('enterprise')"
+            style="width:100%;justify-content:center;padding:12px;margin-top:8px;">Contact Sales</button>
+        </div>
+      </div>
+      <div id="payment-panel"
+        style="display:none;background:var(--bg-container);border:1px solid rgba(67,70,84,.2);border-radius:20px;padding:32px;max-width:480px;margin:0 auto 48px;">
+        <div style="font-family:var(--ff-head);font-size:20px;font-weight:700;margin-bottom:6px;" id="payment-title">
+          Upgrade to Pro</div>
+        <div style="font-family:var(--ff-mono);font-size:12px;color:var(--outline);margin-bottom:24px;"
+          id="payment-subtitle">₹2,999/month · Cancel anytime</div>
+        <div class="alert-strip alert-warn" style="margin-bottom:20px;"><span class="material-symbols-outlined"
+            style="font-size:16px;flex-shrink:0;">info</span><span>Demo app — no real payment processed. Click Confirm
+            to simulate upgrade.</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+          <div class="form-group"><label>Cardholder Name</label><input type="text" placeholder="Arjun Sharma"
+              id="pay-name"></div>
+          <div class="form-group"><label>Card Number</label><input type="text" placeholder="4242 4242 4242 4242"
+              maxlength="19" id="pay-card" style="font-family:var(--ff-mono);"
+              oninput="this.value=this.value.replace(/[^\d\s]/g,'').replace(/(\d{4})/g,'$1 ').trim().slice(0,19)"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM / YY" maxlength="7"
+                id="pay-exp" style="font-family:var(--ff-mono);"></div>
+            <div class="form-group"><label>CVV</label><input type="password" placeholder="•••" maxlength="3"
+                id="pay-cvv" style="font-family:var(--ff-mono);"></div>
+          </div>
+        </div>
+        <div id="payment-error" style="display:none;" class="alert-strip alert-danger"></div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-primary" onclick="confirmPayment()" id="pay-confirm-btn"
+            style="flex:1;justify-content:center;padding:13px;"><span class="material-symbols-outlined icon-fill"
+              style="font-size:15px;">lock</span>Confirm Upgrade</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('payment-panel').style.display='none'"
+            style="padding:13px 18px;">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ADD TRANSACTION MODAL -->
   <div class="modal-overlay" id="modal">
-    <div class="modal">
-      <div class="modal-title syne">+ Add Transaction</div>
+    <div class="modal" style="max-width:520px;">
+      <div class="modal-title syne" id="modal-title-text">+ Add Transaction</div>
+      <input type="hidden" id="m-edit-idx" value="">
       <div class="modal-form-grid">
-        <div><label>Date</label><input type="text" id="m-date" placeholder="2025-06-14"></div>
-        <div><label>Amount (₹)</label><input type="number" id="m-amt" placeholder="1200"></div>
+        <div><label>Date</label><input type="date" id="m-date"></div>
+        <div><label>Amount (₹) <span style="color:var(--outline);font-size:11px;">excl. GST</span></label><input
+            type="number" id="m-amt" placeholder="1200"></div>
       </div>
       <div style="margin-bottom:12px;"><label>Description</label><input type="text" id="m-desc"
           placeholder="AWS Monthly Bill"></div>
-      <div><label>Category</label>
-        <select id="m-cat">
+      <div style="margin-bottom:12px;"><label>Vendor / Party Name</label><input type="text" id="m-vendor"
+          placeholder="Amazon Web Services India Pvt Ltd"></div>
+      <div style="margin-bottom:12px;"><label>GST Number (GSTIN) <span
+            style="color:var(--outline);font-size:11px;">optional</span></label><input type="text" id="m-gstin"
+          placeholder="27AAPCA1234A1ZK" style="font-family:var(--ff-mono);text-transform:uppercase;" maxlength="15">
+      </div>
+      <div class="modal-form-grid" style="margin-bottom:12px;">
+        <div><label>GST Type</label><select id="m-gst-type">
+            <option value="none">No GST / Exempt</option>
+            <option value="igst">IGST (Inter-state)</option>
+            <option value="cgst_sgst">CGST + SGST (Intra-state)</option>
+            <option value="utgst">CGST + UTGST</option>
+          </select></div>
+        <div><label>GST Rate</label><select id="m-gst-rate">
+            <option value="0">0%</option>
+            <option value="5">5%</option>
+            <option value="12">12%</option>
+            <option value="18" selected>18%</option>
+            <option value="28">28%</option>
+          </select></div>
+      </div>
+      <div id="gst-breakdown"
+        style="display:none;background:rgba(79,124,255,.06);border:1px solid rgba(79,124,255,.15);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-family:var(--ff-mono);font-size:12px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span
+            style="color:var(--outline);">Base Amount</span><span id="gst-base">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;" id="igst-row"><span
+            style="color:var(--outline);">IGST</span><span id="gst-igst">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;" id="cgst-row"><span
+            style="color:var(--outline);">CGST</span><span id="gst-cgst">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;" id="sgst-row"><span
+            style="color:var(--outline);">SGST/UTGST</span><span id="gst-sgst">₹0</span></div>
+        <div
+          style="display:flex;justify-content:space-between;border-top:1px solid rgba(79,124,255,.15);padding-top:6px;margin-top:4px;font-weight:600;">
+          <span>Total (incl. GST)</span><span id="gst-total" style="color:var(--primary);">₹0</span></div>
+      </div>
+      <div><label>Category</label><select id="m-cat">
           <option>SaaS / Software</option>
           <option>Travel</option>
           <option>Marketing</option>
@@ -3466,81 +3688,322 @@
           <option>Operations</option>
           <option>Infrastructure</option>
           <option>Other</option>
-        </select>
-      </div>
+        </select></div>
+      <div style="margin-top:12px;"><label>Approval Status</label><select id="m-status">
+          <option value="pending">Pending Approval</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select></div>
+      <div style="margin-top:12px;margin-bottom:4px;"><label>Notes <span
+            style="color:var(--outline);font-size:11px;">optional</span></label><input type="text" id="m-notes"
+          placeholder="e.g. Monthly billing, invoice #INV-2025-06"></div>
       <div class="modal-actions">
-        <button class="btn btn-primary" onclick="addTx()">Add Transaction</button>
+        <button class="btn btn-primary" onclick="addTx()" id="modal-save-btn">Add Transaction</button>
         <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
       </div>
     </div>
   </div>
 
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav" id="mobile-nav" style="display:none;">
+    <div class="mobile-nav-item active" id="mnav-dashboard" onclick="mobileNav('dashboard')"><span
+        class="material-symbols-outlined">dashboard</span>Home</div>
+    <div class="mobile-nav-item" id="mnav-import" onclick="mobileNav('import')"><span
+        class="material-symbols-outlined">upload_file</span>Import</div>
+    <div class="mobile-nav-item" id="mnav-anomaly" onclick="mobileNav('anomaly')"><span
+        class="material-symbols-outlined">emergency_home</span>Alerts</div>
+    <div class="mobile-nav-item" id="mnav-approvals" onclick="mobileNav('approvals')"><span
+        class="material-symbols-outlined">task_alt</span>Approve</div>
+    <div class="mobile-nav-item" id="mnav-advisor" onclick="mobileNav('advisor')"><span
+        class="material-symbols-outlined">psychology</span>Advisor</div>
+    <div class="mobile-nav-item" id="mnav-gst" onclick="mobileNav('gst')"><span
+        class="material-symbols-outlined">receipt_long</span>GST</div>
+    <div class="mobile-nav-item" id="mnav-report" onclick="mobileNav('report')"><span
+        class="material-symbols-outlined">analytics</span>Report</div>
+  </nav>
+
   <script>
     /* ═══════════════════════════════════════════
-       STATE
+       SUPABASE — loaded securely from server via /api/config
+       No credentials are hardcoded here.
     ═══════════════════════════════════════════ */
-    let txns = JSON.parse(localStorage.getItem('spendai_tx') || '[]');
-    let budgets = JSON.parse(localStorage.getItem('spendai_bud') || '{}');
-    let anomals = JSON.parse(localStorage.getItem('spendai_anm') || '[]');
-    let csvBuf = [];
-    let donutChart = null, barChart = null;
-    const CAT_COLORS = ['#4f7cff', '#7b5ea7', '#00d4aa', '#ffd166', '#ff6b7a', '#5eceff', '#ff9f43', '#a29bfe'];
+    let _sb = null;
+
+    async function initSupabase() {
+      try {
+        const res = await fetch('/api/config');
+        if (!res.ok) throw new Error('Config endpoint returned ' + res.status);
+        const { supabaseUrl, supabaseAnonKey } = await res.json();
+        _sb = supabase.createClient(supabaseUrl, supabaseAnonKey);
+      } catch (err) {
+        console.error('Failed to load Supabase config:', err);
+        document.body.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:center;height:100vh;
+                      background:#0c0e13;color:#ff6b7a;font-family:monospace;font-size:14px;
+                      flex-direction:column;gap:12px;">
+            <div style="font-size:32px;">⚠️</div>
+            <div>Could not connect to backend. Is the server running?</div>
+            <div style="color:#64748b;font-size:12px;">${err.message}</div>
+          </div>`;
+      }
+    }
+
+    /* ───────── PLAN CONFIG ───────── */
+    const PLAN_LIMITS = {
+      free: { txnLimit: 50, label: 'Free', price: '₹0', color: 'var(--outline)' },
+      starter: { txnLimit: 500, label: 'Starter', price: '₹999/mo', color: 'var(--primary-dim)' },
+      pro: { txnLimit: Infinity, label: 'Pro', price: '₹2,999/mo', color: 'var(--tertiary)' },
+      enterprise: { txnLimit: Infinity, label: 'Enterprise', price: 'Custom', color: '#c09bf0' }
+    };
+
+    /* ───────── AUTH STATE ───────── */
+    let currentUser = null;
+    let userProfile = null;
+
+    async function loadProfile(uid) {
+      try {
+        const { data, error } = await _sb.from('profiles').select('*').eq('id', uid).single();
+        return error ? null : data;
+      } catch { return null; }
+    }
+
+    async function upsertProfile(uid, fields) {
+      try {
+        const { data } = await _sb.from('profiles').upsert({ id: uid, ...fields }, { onConflict: 'id' }).select().single();
+        return data;
+      } catch { return null; }
+    }
+
+    async function initAuth() {
+      const { data: { session } } = await _sb.auth.getSession();
+      if (session?.user) {
+        currentUser = session.user;
+        userProfile = await loadProfile(session.user.id);
+        if (!userProfile) userProfile = await createDefaultProfile(session.user);
+        loadUserData();
+        updateProfileUI();
+        _goToPage('app');
+        history.replaceState({ page: 'app' }, '', '#app');
+        refreshDash(); checkBudgetAlerts(); renderApprovals(); renderGSTReport();
+      } else {
+        const hash = window.location.hash.replace('#', '');
+        const safe = ['landing', 'login', 'pricing'];
+        const start = safe.includes(hash) ? hash : 'landing';
+        _goToPage(start);
+        history.replaceState({ page: start }, '', '#' + start);
+      }
+
+      _sb.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+          currentUser = session.user;
+          userProfile = await loadProfile(session.user.id);
+          if (!userProfile) userProfile = await createDefaultProfile(session.user);
+          loadUserData();
+          updateProfileUI();
+          goTo('app');
+          refreshDash(); checkBudgetAlerts(); renderApprovals(); renderGSTReport();
+        } else if (event === 'SIGNED_OUT') {
+          currentUser = null; userProfile = null;
+          txns = []; budgets = {}; anomals = [];
+          goTo('landing');
+        }
+      });
+    }
+
+    async function createDefaultProfile(user) {
+      const meta = user.user_metadata || {};
+      return await upsertProfile(user.id, {
+        full_name: meta.full_name || user.email?.split('@')[0] || 'User',
+        company: meta.company || '',
+        plan: 'free',
+        txn_count: 0
+      });
+    }
+
+    /* ───────── BOOT — fetch config first, then start auth ───────── */
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initSupabase();
+      if (_sb) await initAuth();
+    });
+
+    /* ───────── PER-USER LOCALSTORAGE ───────── */
+    function uKey(k) { return currentUser ? `spendai_${currentUser.id}_${k}` : `spendai_anon_${k}`; }
+
+    function loadUserData() {
+      txns = JSON.parse(localStorage.getItem(uKey('tx')) || '[]').map(t => ({ vendor: '', gstin: '', gstType: 'none', gstRate: 0, igst: 0, cgst: 0, sgst: 0, gstTotal: 0, status: 'approved', notes: '', ...t }));
+      budgets = JSON.parse(localStorage.getItem(uKey('bud')) || '{}');
+      anomals = JSON.parse(localStorage.getItem(uKey('anm')) || '[]');
+    }
+
+    function save() {
+      localStorage.setItem(uKey('tx'), JSON.stringify(txns));
+      localStorage.setItem(uKey('bud'), JSON.stringify(budgets));
+      localStorage.setItem(uKey('anm'), JSON.stringify(anomals));
+      if (currentUser) upsertProfile(currentUser.id, { txn_count: txns.length });
+    }
+
+    function updateProfileUI() {
+      if (!userProfile) return;
+      const plan = userProfile.plan || 'free';
+      const limits = PLAN_LIMITS[plan];
+      const initials = (userProfile.full_name || 'U').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+      const el = id => document.getElementById(id);
+      if (el('sidebar-avatar')) el('sidebar-avatar').textContent = initials;
+      if (el('sidebar-name')) el('sidebar-name').textContent = userProfile.full_name || 'User';
+      if (el('sidebar-plan')) { el('sidebar-plan').textContent = limits.label + ' Plan'; el('sidebar-plan').style.color = limits.color; }
+      if (el('plan-badge')) { el('plan-badge').textContent = limits.label; el('plan-badge').style.color = limits.color; }
+      if (el('pricing-plan-label')) el('pricing-plan-label').textContent = limits.label;
+    }
+
+    function checkPlanLimit() {
+      const plan = userProfile?.plan || 'free';
+      const limit = PLAN_LIMITS[plan].txnLimit;
+      if (txns.length >= limit) {
+        const next = plan === 'free' ? 'Starter (₹999/mo)' : 'Pro (₹2,999/mo)';
+        if (confirm(`You've hit the ${PLAN_LIMITS[plan].label} plan limit (${limit} transactions).\n\nUpgrade to ${next}?\n\nClick OK to go to the pricing page.`)) goTo('pricing');
+        return false;
+      }
+      return true;
+    }
 
     /* ═══════════════════════════════════════════
        ROUTING
     ═══════════════════════════════════════════ */
-    function goTo(page) {
+    function _goToPage(page) {
+      if (page === 'app' && !currentUser) { _goToPage('login'); return; }
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page-' + page).classList.add('active');
+      const el = document.getElementById('page-' + page);
+      if (!el) return;
+      el.classList.add('active');
       window.scrollTo(0, 0);
-      // show bottom nav only inside the app
-      const mobileNav = document.getElementById('mobile-nav');
-      if (mobileNav) mobileNav.style.display = page === 'app' ? '' : 'none';
+      const mn = document.getElementById('mobile-nav');
+      if (mn) mn.style.display = page === 'app' ? '' : 'none';
+      if (page === 'pricing') { updateProfileUI(); updatePricingCards(); }
     }
 
+    function goTo(page) {
+      history.pushState({ page }, '', '#' + page);
+      _goToPage(page);
+    }
+
+    window.addEventListener('popstate', e => {
+      const page = e.state?.page || 'landing';
+      _goToPage(page);
+    });
+
     /* ═══════════════════════════════════════════
-       LOGIN
+       AUTH
     ═══════════════════════════════════════════ */
-    function switchTab(t) {
+    function switchLoginTab(t, e) {
+      if (e) e.preventDefault();
       document.querySelectorAll('.login-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
-      event.target.classList.add('active');
+      document.querySelectorAll('.login-tab').forEach(b => { if (b.textContent.toLowerCase().includes(t)) b.classList.add('active'); });
       document.getElementById('form-' + t).classList.add('active');
+      showAuthError('');
     }
 
-    function doLogin() {
-      goTo('app');
-      refreshDash();
-      checkBudgetAlerts();
+    function showAuthError(msg, elId = 'auth-error') {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.style.display = msg ? 'block' : 'none';
+      el.textContent = msg;
+      el.style.color = msg.startsWith('✅') ? 'var(--tertiary)' : '';
+    }
+
+    function setSubmitLoading(loading) {
+      ['btn-signin', 'btn-signup'].forEach(id => {
+        const b = document.getElementById(id);
+        if (!b) return;
+        b.disabled = loading;
+        b.textContent = loading ? 'Please wait…' : (id === 'btn-signup' ? 'Create Account' : 'Sign In');
+      });
+    }
+
+    async function doDemo() {
+      setSubmitLoading(true);
+      const email = 'demo@spendai.app', pass = 'demo123456';
+      let { error } = await _sb.auth.signInWithPassword({ email, password: pass });
+      if (error) {
+        await _sb.auth.signUp({ email, password: pass, options: { data: { full_name: 'Demo User', company: 'SpendAI Demo' } } });
+        await _sb.auth.signInWithPassword({ email, password: pass });
+      }
+      setSubmitLoading(false);
+    }
+
+    async function doSignIn() {
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-pass').value;
+      if (!email || !pass) { showAuthError('Please enter your email and password.'); return; }
+      showAuthError('');
+      setSubmitLoading(true);
+      const { error } = await _sb.auth.signInWithPassword({ email, password: pass });
+      setSubmitLoading(false);
+      if (error) showAuthError(error.message);
+    }
+
+    async function doSignUp() {
+      const name = document.getElementById('signup-name').value.trim();
+      const company = document.getElementById('signup-company').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const pass = document.getElementById('signup-pass').value;
+      const confirm = document.getElementById('signup-confirm').value;
+      if (!name || !email || !pass) { showAuthError('Please fill all required fields.', 'signup-error'); return; }
+      if (pass !== confirm) { showAuthError('Passwords do not match.', 'signup-error'); return; }
+      if (pass.length < 6) { showAuthError('Password must be at least 6 characters.', 'signup-error'); return; }
+      showAuthError('', 'signup-error');
+      setSubmitLoading(true);
+      const { error } = await _sb.auth.signUp({ email, password: pass, options: { data: { full_name: name, company } } });
+      setSubmitLoading(false);
+      if (error) { showAuthError(error.message, 'signup-error'); return; }
+      showAuthError('✅ Account created! Check your email to confirm, then sign in.', 'signup-error');
+    }
+
+    async function doLogout() { await _sb.auth.signOut(); }
+
+    async function doForgotPassword(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      if (!email) { showAuthError('Enter your email first, then click Forgot.'); return; }
+      const { error } = await _sb.auth.resetPasswordForEmail(email);
+      showAuthError(error ? error.message : '✅ Password reset email sent! Check your inbox.');
     }
 
     /* ═══════════════════════════════════════════
-       APP NAVIGATION
+       STATE
     ═══════════════════════════════════════════ */
-    const tabTitles = { dashboard: 'Dashboard', import: 'Import Data', anomaly: 'Anomaly Detector', subscriptions: 'Subscriptions', advisor: 'Cost Advisor', report: 'AI Report', budgets: 'Budget Alerts' };
+    let txns = [], budgets = {}, anomals = [], csvBuf = [];
+    let donutChart = null, barChart = null;
+    let approvalsFilter = 'pending';
+    const CAT_COLORS = ['#4f7cff', '#7b5ea7', '#00d4aa', '#ffd166', '#ff6b7a', '#5eceff', '#ff9f43', '#a29bfe'];
 
-    function switchTab2(t) {
+    /* ═══════════════════════════════════════════
+       APP TABS
+    ═══════════════════════════════════════════ */
+    const TAB_TITLES = { dashboard: 'Dashboard', import: 'Import Data', anomaly: 'Anomaly Detector', subscriptions: 'Subscriptions', advisor: 'Cost Advisor', report: 'AI Report', budgets: 'Budget Alerts', approvals: 'Approvals', gst: 'GST Report' };
+
+    function switchTab2(t, e) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       document.getElementById('tab-' + t).classList.add('active');
-      event.currentTarget.classList.add('active');
-      document.getElementById('topbar-title').textContent = tabTitles[t] || t;
+      if (e?.currentTarget) e.currentTarget.classList.add('active');
+      document.getElementById('topbar-title').textContent = TAB_TITLES[t] || t;
+    }
+
+    function mobileNav(t) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById('tab-' + t).classList.add('active');
+      const el = document.getElementById('mnav-' + t);
+      if (el) el.classList.add('active');
+      document.getElementById('topbar-title').textContent = TAB_TITLES[t] || t;
     }
 
     /* ═══════════════════════════════════════════
-       AI API — key entered by user at runtime,
-       stored only in memory (never in source)
+       AI PROXY CALL
     ═══════════════════════════════════════════ */
     async function callClaude(prompt, sys) {
-      // Calls our own server — API key never exposed to browser
-      const r = await fetch('/api/ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt,
-          system: sys || 'You are SpendAI, a financial analysis assistant. Be concise and return only what is asked.'
-        })
-      });
+      const r = await fetch('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt, system: sys || 'You are SpendAI, an expert Indian corporate finance assistant. Always use ₹ for currency. Be concise.' }) });
       const d = await r.json();
       if (d.error) throw new Error(d.error);
       return d.result || '';
@@ -3550,104 +4013,89 @@
        SAMPLE DATA
     ═══════════════════════════════════════════ */
     const SAMPLES = [
-      ['2025-06-14', 'AWS EC2 Overlimit', 'Infrastructure', 24800],
-      ['2025-06-13', 'Bastian Mumbai Dine In', 'Operations', 12450],
-      ['2025-06-12', 'Uber India Trip #4492', 'Travel', 842],
-      ['2025-06-11', 'Slack Business Plan', 'SaaS / Software', 4200],
-      ['2025-06-10', 'Google Workspace', 'SaaS / Software', 3600],
-      ['2025-06-09', 'IndiGo BLR-DEL', 'Travel', 8200],
-      ['2025-06-08', 'Meta Ads Campaign', 'Marketing', 18000],
-      ['2025-06-07', 'Figma Team Plan', 'SaaS / Software', 2800],
-      ['2025-06-06', 'Office Rent June', 'Operations', 45000],
-      ['2025-06-05', 'Payroll Processing', 'Payroll', 148000],
-      ['2025-06-04', 'Notion Team', 'SaaS / Software', 1800],
-      ['2025-06-03', 'Hubspot CRM', 'SaaS / Software', 12000],
-      ['2025-06-02', 'GitHub Enterprise', 'Infrastructure', 7200],
-      ['2025-06-01', 'Swiggy Office Lunch', 'Operations', 4800],
-      ['2025-05-31', 'AWS EC2 Overlimit', 'Infrastructure', 24800],
-      ['2025-05-30', 'Google Ads', 'Marketing', 22000],
-      ['2025-05-29', 'LinkedIn Recruiter', 'Marketing', 9500],
-      ['2025-05-28', 'MakeMyTrip Hotel', 'Travel', 6400],
-      ['2025-05-27', 'Datadog Monitoring', 'Infrastructure', 9800],
-      ['2025-05-26', 'Twilio SMS', 'Infrastructure', 3400],
-      ['2025-05-25', 'Adobe Creative Suite', 'SaaS / Software', 6700],
-      ['2025-05-24', 'Zoom Webinar', 'SaaS / Software', 5600],
-      ['2025-05-23', 'Cloudflare Pro', 'Infrastructure', 2900],
-      ['2025-05-22', 'Intercom Support', 'SaaS / Software', 8100],
-      ['2025-05-21', 'Team Offsite Venue', 'Operations', 85000],
-      ['2025-05-20', 'Postman API', 'SaaS / Software', 1500],
-      ['2025-05-19', 'Mixpanel Analytics', 'SaaS / Software', 4900],
-      ['2025-05-18', 'Stripe Fees', 'Operations', 5500],
-      ['2025-05-17', 'CA Audit Fees', 'Operations', 18000],
-      ['2025-05-16', 'Razorpay Gateway', 'Operations', 3800],
-      ['2025-05-15', 'AWS RDS Database', 'Infrastructure', 6300],
-      ['2025-05-14', 'Payroll Processing', 'Payroll', 145000],
-      ['2025-05-13', 'IndiGo MUM-BLR', 'Travel', 7400],
-      ['2025-05-12', 'Conference Tickets', 'Marketing', 15000],
-      ['2025-05-11', 'Electricity Bill', 'Operations', 8900],
-      ['2025-04-30', 'Slack Business Plan', 'SaaS / Software', 4200],
-      ['2025-04-29', 'Google Workspace', 'SaaS / Software', 3600],
-      ['2025-04-28', 'AWS EC2', 'Infrastructure', 18500],
-      ['2025-04-27', 'Payroll Processing', 'Payroll', 143000],
-      ['2025-04-26', 'Office Rent April', 'Operations', 45000],
+      ['2025-06-14', 'AWS EC2 Overlimit', 'Infrastructure', 24800, 'Amazon Web Services India', 'igst', 18, 'pending'],
+      ['2025-06-13', 'Bastian Mumbai Dine In', 'Operations', 12450, 'Impresario Hospitality', 'cgst_sgst', 5, 'pending'],
+      ['2025-06-12', 'Uber India Trip #4492', 'Travel', 842, 'Uber India Systems', 'cgst_sgst', 5, 'approved'],
+      ['2025-06-11', 'Slack Business Plan', 'SaaS / Software', 4200, 'Slack Technologies India', 'igst', 18, 'approved'],
+      ['2025-06-10', 'Google Workspace', 'SaaS / Software', 3600, 'Google India Pvt Ltd', 'igst', 18, 'approved'],
+      ['2025-06-09', 'IndiGo BLR-DEL', 'Travel', 8200, 'InterGlobe Aviation Ltd', 'cgst_sgst', 12, 'approved'],
+      ['2025-06-08', 'Meta Ads Campaign', 'Marketing', 18000, 'Meta Platforms India', 'igst', 18, 'pending'],
+      ['2025-06-07', 'Figma Team Plan', 'SaaS / Software', 2800, 'Figma Inc', 'igst', 18, 'approved'],
+      ['2025-06-06', 'Office Rent June', 'Operations', 45000, 'Prestige Commercial', 'cgst_sgst', 18, 'approved'],
+      ['2025-06-05', 'Payroll Processing', 'Payroll', 148000, 'Internal HR', 'none', 0, 'approved'],
+      ['2025-06-04', 'Notion Team', 'SaaS / Software', 1800, 'Notion Labs', 'igst', 18, 'approved'],
+      ['2025-06-03', 'Hubspot CRM', 'SaaS / Software', 12000, 'HubSpot India', 'igst', 18, 'pending'],
+      ['2025-06-02', 'GitHub Enterprise', 'Infrastructure', 7200, 'GitHub Inc', 'igst', 18, 'approved'],
+      ['2025-06-01', 'Swiggy Office Lunch', 'Operations', 4800, 'Bundl Technologies', 'cgst_sgst', 5, 'approved'],
+      ['2025-05-31', 'AWS EC2 Overlimit', 'Infrastructure', 24800, 'Amazon Web Services India', 'igst', 18, 'approved'],
+      ['2025-05-30', 'Google Ads', 'Marketing', 22000, 'Google India Pvt Ltd', 'igst', 18, 'approved'],
+      ['2025-05-29', 'LinkedIn Recruiter', 'Marketing', 9500, 'LinkedIn India', 'igst', 18, 'approved'],
+      ['2025-05-28', 'MakeMyTrip Hotel', 'Travel', 6400, 'MakeMyTrip India', 'cgst_sgst', 12, 'approved'],
+      ['2025-05-27', 'Datadog Monitoring', 'Infrastructure', 9800, 'Datadog Inc', 'igst', 18, 'approved'],
+      ['2025-05-26', 'Twilio SMS', 'Infrastructure', 3400, 'Twilio Inc', 'igst', 18, 'approved'],
+      ['2025-05-25', 'Adobe Creative Suite', 'SaaS / Software', 6700, 'Adobe Systems India', 'igst', 18, 'approved'],
+      ['2025-05-24', 'Zoom Webinar', 'SaaS / Software', 5600, 'Zoom Video India', 'igst', 18, 'approved'],
+      ['2025-05-23', 'Cloudflare Pro', 'Infrastructure', 2900, 'Cloudflare Inc', 'igst', 18, 'approved'],
+      ['2025-05-22', 'Intercom Support', 'SaaS / Software', 8100, 'Intercom Inc', 'igst', 18, 'approved'],
+      ['2025-05-21', 'Team Offsite Venue', 'Operations', 85000, 'Taj Hotels', 'cgst_sgst', 18, 'rejected'],
+      ['2025-05-20', 'Postman API', 'SaaS / Software', 1500, 'Postman Inc', 'igst', 18, 'approved'],
+      ['2025-05-19', 'Mixpanel Analytics', 'SaaS / Software', 4900, 'Mixpanel Inc', 'igst', 18, 'approved'],
+      ['2025-05-18', 'Stripe Fees', 'Operations', 5500, 'Stripe India', 'cgst_sgst', 18, 'approved'],
+      ['2025-05-17', 'CA Audit Fees', 'Operations', 18000, 'N. Sharma & Associates', 'cgst_sgst', 18, 'approved'],
+      ['2025-05-16', 'Razorpay Gateway', 'Operations', 3800, 'Razorpay Software Pvt Ltd', 'cgst_sgst', 18, 'approved'],
+      ['2025-05-15', 'AWS RDS Database', 'Infrastructure', 6300, 'Amazon Web Services India', 'igst', 18, 'approved'],
+      ['2025-05-14', 'Payroll Processing', 'Payroll', 145000, 'Internal HR', 'none', 0, 'approved'],
+      ['2025-05-13', 'IndiGo MUM-BLR', 'Travel', 7400, 'InterGlobe Aviation Ltd', 'cgst_sgst', 12, 'approved'],
+      ['2025-05-12', 'Conference Tickets', 'Marketing', 15000, 'NASSCOM Events', 'cgst_sgst', 18, 'approved'],
+      ['2025-05-11', 'Electricity Bill', 'Operations', 8900, 'BEST Mumbai', 'cgst_sgst', 18, 'approved'],
+      ['2025-04-30', 'Slack Business Plan', 'SaaS / Software', 4200, 'Slack Technologies India', 'igst', 18, 'approved'],
+      ['2025-04-29', 'Google Workspace', 'SaaS / Software', 3600, 'Google India Pvt Ltd', 'igst', 18, 'approved'],
+      ['2025-04-28', 'AWS EC2', 'Infrastructure', 18500, 'Amazon Web Services India', 'igst', 18, 'approved'],
+      ['2025-04-27', 'Payroll Processing', 'Payroll', 143000, 'Internal HR', 'none', 0, 'approved'],
+      ['2025-04-26', 'Office Rent April', 'Operations', 45000, 'Prestige Commercial', 'cgst_sgst', 18, 'approved'],
     ];
 
     function loadSample(n) {
-      csvBuf = SAMPLES.slice(0, n).map(r => ({ date: r[0], description: r[1], category: r[2], amount: r[3] }));
+      csvBuf = SAMPLES.slice(0, n).map(r => {
+        const [date, desc, cat, base, vendor, gstType, gstRate, status] = r;
+        const tax = gstType !== 'none' ? base * gstRate / 100 : 0;
+        return { date, description: desc, category: cat, amount: base, vendor, gstin: '', gstType, gstRate, igst: gstType === 'igst' ? tax : 0, cgst: gstType !== 'igst' && gstType !== 'none' ? tax / 2 : 0, sgst: gstType !== 'igst' && gstType !== 'none' ? tax / 2 : 0, gstTotal: tax, totalWithGst: base + tax, status, notes: '' };
+      });
       showCSVPreview();
     }
 
     function showCSVPreview() {
       document.getElementById('csv-preview').style.display = 'block';
       const p = csvBuf.slice(0, 5);
-      document.getElementById('csv-preview-table').innerHTML = `
-    <table style="width:100%;border-collapse:collapse;font-size:12px;">
-      <thead><tr style="border-bottom:1px solid rgba(67,70,84,.15);">
-        <th style="text-align:left;padding:8px 12px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--outline);">Date</th>
-        <th style="text-align:left;padding:8px 12px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--outline);">Description</th>
-        <th style="text-align:left;padding:8px 12px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--outline);">Category</th>
-        <th style="text-align:right;padding:8px 12px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--outline);">Amount</th>
-      </tr></thead>
-      <tbody>${p.map(r => `<tr><td style="padding:10px 12px;">${r.date}</td><td style="padding:10px 12px;">${r.description}</td><td style="padding:10px 12px;">${r.category || '<em style="color:var(--outline)">auto</em>'}</td><td style="padding:10px 12px;text-align:right;font-family:var(--ff-mono);">₹${r.amount.toLocaleString('en-IN')}</td></tr>`).join('')}
-      ${csvBuf.length > 5 ? `<tr><td colspan="4" style="padding:10px 12px;text-align:center;color:var(--outline);font-size:11px;">+${csvBuf.length - 5} more rows</td></tr>` : ''}</tbody>
-    </table>`;
+      document.getElementById('csv-preview-table').innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="border-bottom:1px solid rgba(67,70,84,.15);">${['Date', 'Description', 'Category', 'Amount'].map(h => `<th style="text-align:${h === 'Amount' ? 'right' : 'left'};padding:8px 12px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--outline);">${h}</th>`).join('')}</tr></thead><tbody>${p.map(r => `<tr><td style="padding:10px 12px;">${r.date}</td><td style="padding:10px 12px;">${r.description}</td><td style="padding:10px 12px;">${r.category || '<em style="color:var(--outline)">auto</em>'}</td><td style="padding:10px 12px;text-align:right;font-family:var(--ff-mono);">₹${r.amount.toLocaleString('en-IN')}</td></tr>`).join('')}${csvBuf.length > 5 ? `<tr><td colspan="4" style="padding:10px 12px;text-align:center;color:var(--outline);font-size:11px;">+${csvBuf.length - 5} more rows</td></tr>` : ''}</tbody></table>`;
     }
 
     async function importData() {
       document.getElementById('import-loading').style.display = 'block';
-      document.querySelector('#csv-preview .btn-primary').disabled = true;
       const uncat = csvBuf.filter(r => !r.category);
       if (uncat.length) {
         try {
           const list = uncat.map((r, i) => `${i + 1}. "${r.description}" ₹${r.amount}`).join('\n');
-          const resp = await callClaude(`Categorize these expenses into one of: SaaS / Software, Travel, Marketing, Payroll, Operations, Infrastructure, Other. Return ONLY a JSON array of strings.\n${list}`, 'Return ONLY valid JSON array. No markdown.');
+          const resp = await callClaude(`Categorize these expenses into: SaaS / Software, Travel, Marketing, Payroll, Operations, Infrastructure, Other. Return ONLY a JSON array of strings.\n${list}`, 'Return ONLY valid JSON array of strings. No markdown.');
           const cats = JSON.parse(resp.replace(/```json|```/g, '').trim());
           cats.forEach((c, i) => { if (uncat[i]) uncat[i].category = c; });
-        } catch (e) { uncat.forEach(r => r.category = 'Other'); }
+        } catch { uncat.forEach(r => r.category = 'Other'); }
       }
       txns = [...txns, ...csvBuf];
-      save();
+      save(); csvBuf = [];
       document.getElementById('import-loading').style.display = 'none';
       document.getElementById('csv-preview').style.display = 'none';
-      csvBuf = [];
-      refreshDash();
-      checkBudgetAlerts();
-      switchTab2({ currentTarget: document.querySelector('.nav-item') }, 'dashboard');
-      document.querySelectorAll('.nav-item').forEach((n, i) => i === 0 ? n.classList.add('active') : n.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('tab-dashboard').classList.add('active');
-      document.getElementById('topbar-title').textContent = 'Dashboard';
+      refreshDash(); checkBudgetAlerts(); renderApprovals(); renderGSTReport();
+      switchTab2('dashboard', null);
+      document.querySelectorAll('.nav-item')[0].classList.add('active');
     }
 
     function importManual() {
-      csvBuf.forEach(r => { if (!r.category) r.category = 'Other'; });
-      txns = [...txns, ...csvBuf];
-      save();
-      csvBuf = [];
+      csvBuf.forEach(r => { if (!r.category) r.category = 'Other'; if (!r.status) r.status = 'pending'; });
+      txns = [...txns, ...csvBuf]; save(); csvBuf = [];
       document.getElementById('csv-preview').style.display = 'none';
-      refreshDash();
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('tab-dashboard').classList.add('active');
+      refreshDash(); renderApprovals(); renderGSTReport();
+      switchTab2('dashboard', null);
     }
 
     function handleCSV(inp) {
@@ -3657,8 +4105,7 @@
         const lines = e.target.result.split('\n').filter(l => l.trim());
         const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
         csvBuf = lines.slice(1).map(line => {
-          const cols = line.split(',');
-          const row = {};
+          const cols = line.split(','); const row = {};
           headers.forEach((h, i) => row[h] = (cols[i] || '').trim().replace(/"/g, ''));
           return { date: row['date'] || '', description: row['description'] || row['name'] || '', amount: parseFloat(row['amount'] || 0), category: row['category'] || '' };
         }).filter(r => r.description && r.amount);
@@ -3676,34 +4123,20 @@
       document.getElementById('s-total').textContent = '₹' + total.toLocaleString('en-IN');
       document.getElementById('s-anom').textContent = anomals.length;
       document.getElementById('s-anom-d').textContent = '/ ' + txns.length + ' transactions';
-
       const catTot = {};
       txns.forEach(t => catTot[t.category] = (catTot[t.category] || 0) + t.amount);
       const topCat = Object.entries(catTot).sort((a, b) => b[1] - a[1])[0];
-      if (topCat) {
-        document.getElementById('s-topcat').textContent = topCat[0];
-        document.getElementById('s-topcat-d').textContent = Math.round(topCat[1] / total * 100) + '% of total';
-      }
-      renderDonut(catTot, total);
-      renderBar(6);
-      renderTxTable();
+      if (topCat) { document.getElementById('s-topcat').textContent = topCat[0]; document.getElementById('s-topcat-d').textContent = Math.round(topCat[1] / total * 100) + '% of total'; }
+      renderDonut(catTot, total); renderBar(6); renderTxTable();
     }
 
     function renderDonut(catTot, total) {
       const ctx = document.getElementById('donut-chart');
       if (donutChart) donutChart.destroy();
       const labels = Object.keys(catTot), data = labels.map(l => catTot[l]);
-      donutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: { labels, datasets: [{ data, backgroundColor: CAT_COLORS.slice(0, labels.length), borderWidth: 0, hoverOffset: 6 }] },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '72%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' ₹' + c.parsed.toLocaleString('en-IN') } } } }
-      });
+      donutChart = new Chart(ctx, { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: CAT_COLORS.slice(0, labels.length), borderWidth: 0, hoverOffset: 6 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '72%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' ₹' + c.parsed.toLocaleString('en-IN') } } } } });
       document.getElementById('donut-center-val').textContent = '₹' + (total / 1000).toFixed(1) + 'k';
-      document.getElementById('donut-legend').innerHTML = labels.map((l, i) => `
-    <div class="legend-item">
-      <div class="legend-left"><div class="legend-dot" style="background:${CAT_COLORS[i]}"></div>${l}</div>
-      <div class="legend-val">${Math.round(catTot[l] / total * 100)}%</div>
-    </div>`).join('');
+      document.getElementById('donut-legend').innerHTML = labels.map((l, i) => `<div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:${CAT_COLORS[i]}"></div>${l}</div><div class="legend-val">${Math.round(catTot[l] / total * 100)}%</div></div>`).join('');
     }
 
     function renderBar(months) {
@@ -3711,20 +4144,8 @@
       if (barChart) barChart.destroy();
       const monthly = {};
       txns.forEach(t => { const m = t.date ? t.date.slice(0, 7) : '?'; monthly[m] = (monthly[m] || 0) + t.amount; });
-      let labels = Object.keys(monthly).sort().slice(-months);
-      const data = labels.map(l => monthly[l]);
-      barChart = new Chart(ctx, {
-        type: 'bar',
-        data: { labels, datasets: [{ data, backgroundColor: labels.map((_, i) => i === labels.length - 1 ? 'rgba(79,124,255,0.9)' : 'rgba(79,124,255,0.25)'), borderRadius: 6, borderSkipped: false }] },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' ₹' + c.parsed.y.toLocaleString('en-IN') } } },
-          scales: {
-            x: { ticks: { color: '#8d90a0', font: { size: 10, family: 'DM Mono' } }, grid: { display: false }, border: { display: false } },
-            y: { ticks: { color: '#8d90a0', font: { size: 10, family: 'DM Mono' }, callback: v => '₹' + (v / 1000).toFixed(0) + 'k' }, grid: { color: 'rgba(67,70,84,.1)' }, border: { display: false } }
-          }
-        }
-      });
+      const labels = Object.keys(monthly).sort().slice(-months), data = labels.map(l => monthly[l]);
+      barChart = new Chart(ctx, { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: labels.map((_, i) => i === labels.length - 1 ? 'rgba(79,124,255,.9)' : 'rgba(79,124,255,.25)'), borderRadius: 6, borderSkipped: false }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' ₹' + c.parsed.y.toLocaleString('en-IN') } } }, scales: { x: { ticks: { color: '#8d90a0', font: { size: 10, family: 'DM Mono' } }, grid: { display: false }, border: { display: false } }, y: { ticks: { color: '#8d90a0', font: { size: 10, family: 'DM Mono' }, callback: v => '₹' + (v / 1000).toFixed(0) + 'k' }, grid: { color: 'rgba(67,70,84,.1)' }, border: { display: false } } } } });
     }
 
     function setBarPeriod(m, btn) {
@@ -3733,34 +4154,14 @@
     }
 
     function renderTxTable() {
-      const recent = [...txns].reverse().slice(0, 20);
-      const catIcon = {
-        'SaaS / Software': 'cloud_sync', 'Travel': 'flight', 'Marketing': 'campaign',
-        'Payroll': 'people', 'Operations': 'business_center', 'Infrastructure': 'dns', 'Other': 'receipt'
-      };
-      document.getElementById('tx-table-body').innerHTML = `
-    <table class="tx-table">
-      <thead><tr>
-        <th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th style="text-align:center">Status</th>
-      </tr></thead>
-      <tbody>${recent.map(t => {
-        const isAnom = anomals.some(a => a.description === t.description && a.amount === t.amount);
-        return `<tr class="tx-row-${isAnom ? 'anomaly' : 'normal'}">
-          <td><div style="font-family:var(--ff-mono);font-size:12px;font-weight:500;">${t.date.slice(0, 7) && t.date.slice(8) ? t.date.slice(8) + ' ' + new Date(t.date).toLocaleString('en', { month: 'short' }).toUpperCase() : t.date}</div></td>
-          <td><div class="tx-desc-wrap"><div class="tx-icon"><span class="material-symbols-outlined" style="font-size:15px;">${catIcon[t.category] || 'receipt'}</span></div><span style="font-size:13px;">${t.description}</span></div></td>
-          <td><span class="chip chip-gray">${t.category}</span></td>
-          <td><span class="tx-amount${isAnom ? ' anomaly' : ''}">₹${t.amount.toLocaleString('en-IN')}</span></td>
-          <td style="text-align:center">${isAnom ?
-            `<div class="status-wrap status-bad"><div class="status-dot"></div>High Anomaly</div>` :
-            `<div class="status-wrap status-ok"><div class="status-dot"></div>Clear</div>`
-          }</td>
-        </tr>`;
-      }).join('')}</tbody>
-    </table>`;
+      const recent = [...txns].map((t, i) => ({ ...t, _idx: i })).reverse().slice(0, 20);
+      const catIcon = { 'SaaS / Software': 'cloud_sync', 'Travel': 'flight', 'Marketing': 'campaign', 'Payroll': 'people', 'Operations': 'business_center', 'Infrastructure': 'dns', 'Other': 'receipt' };
+      const sc = { pending: 'yellow', approved: 'teal', rejected: 'red' };
+      document.getElementById('tx-table-body').innerHTML = `<table class="tx-table"><thead><tr><th>Date</th><th>Description</th><th>Vendor</th><th>Category</th><th>Amount</th><th style="text-align:center">Status</th><th style="text-align:center">Actions</th></tr></thead><tbody>${recent.map(t => { const isAnom = anomals.some(a => a.description === t.description && a.amount === t.amount); return `<tr class="tx-row-${isAnom ? 'anomaly' : 'normal'}"><td><div style="font-family:var(--ff-mono);font-size:12px;">${t.date}</div></td><td><div class="tx-desc-wrap"><div class="tx-icon"><span class="material-symbols-outlined" style="font-size:15px;">${catIcon[t.category] || 'receipt'}</span></div><div><span style="font-size:13px;">${t.description}</span>${t.notes ? `<div style="font-size:11px;color:var(--outline);">${t.notes}</div>` : ''}</div></div></td><td><span style="font-size:12px;color:var(--on-surface-var);">${t.vendor || '—'}</span></td><td><span class="chip chip-gray">${t.category}</span></td><td><span class="tx-amount${isAnom ? ' anomaly' : ''}">₹${t.amount.toLocaleString('en-IN')}${t.gstTotal ? `<div style="font-size:10px;color:var(--outline);">+₹${t.gstTotal.toLocaleString('en-IN')} GST</div>` : ''}</span></td><td style="text-align:center"><span class="chip chip-${sc[t.status] || 'blue'}">${t.status}</span></td><td style="text-align:center"><div style="display:flex;gap:4px;justify-content:center;"><button onclick="openModal('${t._idx}')" style="background:rgba(79,124,255,.08);color:var(--primary-dim);border:1px solid rgba(79,124,255,.15);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;">✏️</button><button onclick="deleteTx(${t._idx})" style="background:rgba(255,71,87,.06);color:#ff6b7a;border:1px solid rgba(255,71,87,.15);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;">🗑</button></div></td></tr>`; }).join('')}</tbody></table>`;
     }
 
     function renderEmptyTxTable() {
-      document.getElementById('tx-table-body').innerHTML = `<div style="padding:48px;text-align:center;color:var(--outline);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">📂</div><a href="#" onclick="switchTab2Event('import')" style="color:var(--primary);">Import a CSV</a> or add a transaction to get started.</div>`;
+      document.getElementById('tx-table-body').innerHTML = `<div style="padding:48px;text-align:center;color:var(--outline);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">📂</div>Import a CSV or add a transaction to get started.</div>`;
     }
 
     /* ═══════════════════════════════════════════
@@ -3770,23 +4171,17 @@
       if (!txns.length) { alert('Import data first.'); return; }
       document.getElementById('anomaly-loading').style.display = 'block';
       document.getElementById('anomaly-table-wrap').innerHTML = '';
-      const summary = txns.map(t => `${t.date}|${t.description}|₹${t.amount}|${t.category}`).join('\n');
       try {
-        const resp = await callClaude(
-          `Analyze these expenses and identify anomalies (duplicates, unusual amounts, suspicious patterns). Return a JSON array with fields: description, amount, reason, severity (high/medium/low).\n${summary}`,
-          'Return ONLY valid JSON array. No markdown.'
-        );
+        const summary = txns.map(t => `${t.date}|${t.description}|₹${t.amount}|${t.category}`).join('\n');
+        const resp = await callClaude(`Identify anomalies in these company expenses: duplicate invoices, suspicious amounts, weekend B2B transactions, fraud patterns. Return JSON array: description, amount, reason, severity (high/medium/low), suggestion.\n${summary}`, 'Return ONLY valid JSON array. No markdown.');
         anomals = JSON.parse(resp.replace(/```json|```/g, '').trim());
-      } catch (e) {
+      } catch {
         const amounts = txns.map(t => t.amount), avg = amounts.reduce((a, b) => a + b, 0) / amounts.length;
         const std = Math.sqrt(amounts.map(a => (a - avg) ** 2).reduce((a, b) => a + b, 0) / amounts.length);
         anomals = [];
         txns.forEach(t => { if (t.amount > avg + 2 * std) anomals.push({ description: t.description, amount: t.amount, reason: 'Significantly above average', severity: 'high' }); });
-        for (let i = 0; i < txns.length; i++) for (let j = i + 1; j < txns.length; j++)
-          if (txns[i].description === txns[j].description && Math.abs(txns[i].amount - txns[j].amount) < 10)
-            anomals.push({ description: txns[i].description, amount: txns[i].amount, reason: 'Possible duplicate charge', severity: 'high' });
       }
-      localStorage.setItem('spendai_anm', JSON.stringify(anomals));
+      save();
       document.getElementById('anomaly-loading').style.display = 'none';
       renderAnomalies();
       document.getElementById('s-anom').textContent = anomals.length;
@@ -3796,16 +4191,10 @@
 
     function renderAnomalies() {
       const sev = { high: 'red', medium: 'yellow', low: 'blue' };
-      document.getElementById('anomaly-table-wrap').innerHTML = anomals.length ? `
-    <table class="tx-table">
-      <thead><tr><th>Description</th><th>Amount</th><th>Reason</th><th>Severity</th></tr></thead>
-      <tbody>${anomals.map(a => `<tr class="tx-row-anomaly"><td>${a.description}</td><td class="tx-amount anomaly">₹${(a.amount || 0).toLocaleString('en-IN')}</td><td style="color:var(--on-surface-var);font-size:13px;">${a.reason}</td><td><span class="chip chip-${sev[a.severity] || 'blue'}">${a.severity || 'medium'}</span></td></tr>`).join('')}</tbody>
-    </table>` :
-        `<div style="padding:48px;text-align:center;color:var(--tertiary);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">✅</div>No anomalies detected!</div>`;
+      document.getElementById('anomaly-table-wrap').innerHTML = anomals.length ? `<table class="tx-table"><thead><tr><th>Description</th><th>Amount</th><th>Reason</th><th>Suggestion</th><th>Severity</th></tr></thead><tbody>${anomals.map(a => `<tr class="tx-row-anomaly"><td>${a.description}</td><td class="tx-amount anomaly">₹${(a.amount || 0).toLocaleString('en-IN')}</td><td style="color:var(--on-surface-var);font-size:13px;">${a.reason}</td><td style="color:var(--outline);font-size:12px;">${a.suggestion || '—'}</td><td><span class="chip chip-${sev[a.severity] || 'blue'}">${a.severity || 'medium'}</span></td></tr>`).join('')}</tbody></table>` : `<div style="padding:48px;text-align:center;color:var(--tertiary);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">✅</div>No anomalies detected!</div>`;
       const est = anomals.filter(a => a.severity === 'high').reduce((s, a) => s + (a.amount || 0), 0);
       document.getElementById('s-save').textContent = '₹' + Math.round(est * .3).toLocaleString('en-IN');
-      if (anomals.length)
-        document.getElementById('anomaly-summary').innerHTML = `<div class="alert-strip alert-danger"><span>⚠️</span> Found <strong>${anomals.length}</strong> anomalies. Est. recoverable: <strong>₹${Math.round(est * .3).toLocaleString('en-IN')}</strong></div>`;
+      if (anomals.length) document.getElementById('anomaly-summary').innerHTML = `<div class="alert-strip alert-danger"><span>⚠️</span>Found <strong>${anomals.length}</strong> anomalies. Est. recoverable: <strong>₹${Math.round(est * .3).toLocaleString('en-IN')}</strong></div>`;
     }
 
     /* ═══════════════════════════════════════════
@@ -3813,30 +4202,20 @@
     ═══════════════════════════════════════════ */
     async function analyzeSubs() {
       if (!txns.length) { alert('Import data first.'); return; }
-      document.getElementById('sub-list').innerHTML = '<div style="padding:20px;"><div class="ai-loading"><div class="ai-loading-fill"></div></div><div style="font-family:var(--ff-mono);font-size:10px;color:var(--primary);margin-top:8px;letter-spacing:.1em;text-transform:uppercase;">Detecting recurring charges...</div></div>';
+      document.getElementById('sub-list').innerHTML = '<div style="padding:20px;"><div class="ai-loading"><div class="ai-loading-fill"></div></div></div>';
       try {
-        const resp = await callClaude(`From these transactions identify subscriptions/recurring charges. Return a JSON array with: name, amount (number), frequency (monthly/annual), status (active/unused/duplicate), category.\n${txns.map(t => `${t.description}|₹${t.amount}|${t.date}`).join('\n')}`, 'Return ONLY valid JSON array.');
+        const resp = await callClaude(`Identify subscriptions from these transactions. Flag duplicate tools, unused tools, tools with cheaper Indian alternatives. Return JSON array: name, amount, frequency (monthly/annual), status (active/unused/duplicate), category, indianAlternative (or null).\n${txns.map(t => `${t.description}|₹${t.amount}|${t.date}|${t.vendor || ''}`).join('\n')}`, 'Return ONLY valid JSON array. No markdown.');
         renderSubs(JSON.parse(resp.replace(/```json|```/g, '').trim()));
-      } catch (e) {
-        renderSubs(txns.filter(t => t.category === 'SaaS / Software').map(t => ({ name: t.description, amount: t.amount, frequency: 'monthly', status: 'active', category: t.category })));
-      }
+      } catch { renderSubs(txns.filter(t => t.category === 'SaaS / Software').map(t => ({ name: t.description, amount: t.amount, frequency: 'monthly', status: 'active', category: t.category }))); }
     }
 
     function renderSubs(subs) {
       document.getElementById('sub-count-chip').textContent = subs.length;
       const sc = { active: 'teal', unused: 'red', duplicate: 'yellow' };
-      document.getElementById('sub-list').innerHTML = subs.map(s => `
-    <div class="sub-item">
-      <div><div class="sub-name">${s.name}</div><div class="sub-meta">${s.frequency} · ${s.category}</div></div>
-      <div><div class="sub-amount">₹${(s.amount || 0).toLocaleString('en-IN')}</div><span class="chip chip-${sc[s.status] || 'blue'}">${s.status}</span></div>
-    </div>`).join('');
+      document.getElementById('sub-list').innerHTML = subs.map(s => `<div class="sub-item"><div><div class="sub-name">${s.name}</div><div class="sub-meta">${s.frequency} · ${s.category}</div>${s.indianAlternative ? `<div style="font-size:11px;color:var(--tertiary);margin-top:3px;">💡 Alt: ${s.indianAlternative}</div>` : ''}</div><div><div class="sub-amount">₹${(s.amount || 0).toLocaleString('en-IN')}</div><span class="chip chip-${sc[s.status] || 'blue'}">${s.status}</span></div></div>`).join('');
       const mo = subs.filter(s => s.frequency === 'monthly').reduce((a, s) => a + (s.amount || 0), 0);
       const unused = subs.filter(s => s.status === 'unused');
-      document.getElementById('sub-insights').innerHTML = `
-    <div style="margin-bottom:16px;"><div style="font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--outline);margin-bottom:4px;">Monthly Subscription Cost</div><div style="font-family:var(--ff-head);font-size:26px;font-weight:800;">₹${mo.toLocaleString('en-IN')}</div></div>
-    <div style="margin-bottom:16px;"><div style="font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--outline);margin-bottom:4px;">Annual Projection</div><div style="font-family:var(--ff-mono);font-size:18px;color:#ffd166;">₹${(mo * 12).toLocaleString('en-IN')}</div></div>
-    ${unused.length ? `<div class="alert-strip alert-warn"><span>⚠️</span>${unused.length} possibly unused — save ₹${unused.reduce((a, s) => a + (s.amount || 0), 0).toLocaleString('en-IN')}/mo</div>` : ''}
-    <div class="alert-strip alert-info"><span>💡</span>Consolidating overlapping SaaS tools can cut costs 20–30%.</div>`;
+      document.getElementById('sub-insights').innerHTML = `<div style="margin-bottom:16px;"><div style="font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--outline);margin-bottom:4px;">Monthly Subscription Cost</div><div style="font-family:var(--ff-head);font-size:26px;font-weight:800;">₹${mo.toLocaleString('en-IN')}</div></div><div style="margin-bottom:16px;"><div style="font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--outline);margin-bottom:4px;">Annual Projection</div><div style="font-family:var(--ff-mono);font-size:18px;color:#ffd166;">₹${(mo * 12).toLocaleString('en-IN')}</div></div>${unused.length ? `<div class="alert-strip alert-warn"><span>⚠️</span>${unused.length} possibly unused — save ₹${unused.reduce((a, s) => a + (s.amount || 0), 0).toLocaleString('en-IN')}/mo</div>` : ''}<div class="alert-strip alert-info"><span>💡</span>Consolidating overlapping SaaS tools can cut costs 20–30%.</div>`;
     }
 
     /* ═══════════════════════════════════════════
@@ -3849,15 +4228,15 @@
       const catTot = {}; txns.forEach(t => catTot[t.category] = (catTot[t.category] || 0) + t.amount);
       const total = txns.reduce((s, t) => s + t.amount, 0);
       try {
-        const resp = await callClaude(`Generate exactly 5 cost-saving recommendations for this company. Return a JSON array with: title, estimatedSaving (number, INR/month), description, priority (high/medium/low).\nCategory spend: ${JSON.stringify(catTot)}\nTotal: ₹${total.toLocaleString('en-IN')}`, 'Return ONLY valid JSON array of 5 items.');
+        const resp = await callClaude(`Generate 5 cost-saving recommendations for this Indian company. Include: Indian alternatives (Zoho,Freshworks etc), annual billing savings, GST ITC optimization, vendor consolidation. Return JSON array: title, estimatedSaving (INR/month), description, priority (high/medium/low).\nCategory spend: ${JSON.stringify(catTot)}\nTotal: ₹${total.toLocaleString('en-IN')}`, 'Return ONLY valid JSON array of 5 items. No markdown.');
         renderRecs(JSON.parse(resp.replace(/```json|```/g, '').trim()));
-      } catch (e) {
+      } catch {
         renderRecs([
           { title: 'Consolidate SaaS Subscriptions', estimatedSaving: 15000, description: 'Multiple overlapping productivity tools detected. Audit and consolidate to reduce redundancy.', priority: 'high' },
           { title: 'Switch to Annual Plans', estimatedSaving: 8000, description: 'Monthly billing for SaaS tools costs 15-20% more than annual subscriptions.', priority: 'high' },
           { title: 'Negotiate Cloud Contracts', estimatedSaving: 6000, description: 'AWS and infrastructure costs can be reduced 20-30% with reserved instances.', priority: 'medium' },
           { title: 'Review Unused Subscriptions', estimatedSaving: 4500, description: 'Cancel subscriptions not actively used in the last 60 days.', priority: 'medium' },
-          { title: 'Optimise Travel Policy', estimatedSaving: 3000, description: 'Advance booking requirements and preferred vendors reduce travel costs significantly.', priority: 'low' }
+          { title: 'Optimise Travel Policy', estimatedSaving: 3000, description: 'Advance booking and preferred vendors reduce travel costs significantly.', priority: 'low' }
         ]);
       }
     }
@@ -3868,21 +4247,11 @@
       document.getElementById('s-save').textContent = '₹' + total.toLocaleString('en-IN');
       document.getElementById('s-save-d').textContent = 'Identified by AI Advisor';
       const pc = { high: 'red', medium: 'yellow', low: 'teal' };
-      document.getElementById('recs-list').innerHTML = `
-    <div class="alert-strip alert-success" style="margin-bottom:16px;"><span>💰</span>Total potential savings: <strong>₹${total.toLocaleString('en-IN')}/month</strong> (₹${(total * 12).toLocaleString('en-IN')}/year)</div>
-    ${recs.map((r, i) => `
-    <div class="rec-card ledger-glow">
-      <div style="flex:1">
-        <div class="rec-title">${i + 1}. ${r.title}</div>
-        <div class="rec-saving">Est. ₹${(r.estimatedSaving || 0).toLocaleString('en-IN')}/month</div>
-        <div class="rec-desc">${r.description}</div>
-      </div>
-      <span class="chip chip-${pc[r.priority] || 'blue'}">${r.priority}</span>
-    </div>`).join('')}`;
+      document.getElementById('recs-list').innerHTML = `<div class="alert-strip alert-success" style="margin-bottom:16px;"><span>💰</span>Total potential savings: <strong>₹${total.toLocaleString('en-IN')}/month</strong> (₹${(total * 12).toLocaleString('en-IN')}/year)</div>${recs.map((r, i) => `<div class="rec-card ledger-glow"><div style="flex:1"><div class="rec-title">${i + 1}. ${r.title}</div><div class="rec-saving">Est. ₹${(r.estimatedSaving || 0).toLocaleString('en-IN')}/month</div><div class="rec-desc">${r.description}</div></div><span class="chip chip-${pc[r.priority] || 'blue'}">${r.priority}</span></div>`).join('')}`;
     }
 
     /* ═══════════════════════════════════════════
-       REPORT
+       AI REPORT
     ═══════════════════════════════════════════ */
     async function generateReport() {
       if (!txns.length) { alert('Import data first.'); return; }
@@ -3891,12 +4260,14 @@
       const catTot = {}; txns.forEach(t => catTot[t.category] = (catTot[t.category] || 0) + t.amount);
       const total = txns.reduce((s, t) => s + t.amount, 0);
       const monthly = {}; txns.forEach(t => { const m = t.date ? t.date.slice(0, 7) : '?'; monthly[m] = (monthly[m] || 0) + t.amount; });
+      const gstTotal = txns.reduce((s, t) => s + (t.gstTotal || 0), 0);
+      const pendingCount = txns.filter(t => t.status === 'pending').length;
       try {
-        const report = await callClaude(`Write a professional executive expense summary for company leadership. ~350 words. Include: overall spend summary, category breakdown, key observations, anomalies/concerns (${anomals.length} flagged), recommendations.\nTotal: ₹${total.toLocaleString('en-IN')}\nCategories: ${JSON.stringify(catTot)}\nMonthly: ${JSON.stringify(monthly)}`, 'You are a CFO writing a board-level expense summary. Use formal prose with clear sections.');
+        const report = await callClaude(`Write a professional executive expense summary ~400 words. Include: overall spend, GST paid (₹${gstTotal.toLocaleString('en-IN')}), ITC eligibility, category breakdown, approval status (${pendingCount} pending), anomalies (${anomals.length} flagged), India-specific cost optimisation.\nTotal: ₹${total.toLocaleString('en-IN')}\nCategories: ${JSON.stringify(catTot)}\nMonthly: ${JSON.stringify(monthly)}`, 'You are a CA/CFO writing a board-level expense summary for an Indian company. Use formal prose with clear sections.');
         document.getElementById('report-loading').style.display = 'none';
         document.getElementById('report-date').textContent = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
         document.getElementById('report-body').innerHTML = `<div class="report-box">${report}</div>`;
-      } catch (e) {
+      } catch {
         document.getElementById('report-loading').style.display = 'none';
         document.getElementById('report-body').innerHTML = '<div class="alert-strip alert-warn"><span>⚠️</span>Could not generate AI report. Please try again.</div>';
       }
@@ -3908,23 +4279,13 @@
     function addBudget() {
       const cat = document.getElementById('budget-cat').value, amt = parseFloat(document.getElementById('budget-amt').value);
       if (!amt) return;
-      budgets[cat] = amt;
-      save();
-      renderBudgets();
-      checkBudgetAlerts();
+      budgets[cat] = amt; save(); renderBudgets(); checkBudgetAlerts();
     }
 
     function renderBudgets() {
       const catTot = {}; txns.forEach(t => catTot[t.category] = (catTot[t.category] || 0) + t.amount);
       if (!Object.keys(budgets).length) { document.getElementById('budget-bars').innerHTML = '<div style="color:var(--outline);font-size:13px;">No budgets set yet</div>'; return; }
-      document.getElementById('budget-bars').innerHTML = Object.entries(budgets).map(([cat, b]) => {
-        const spent = catTot[cat] || 0, pct = Math.min(Math.round(spent / b * 100), 100);
-        const col = pct >= 90 ? '#ff4757' : pct >= 70 ? '#ffd166' : '#28dfb5';
-        return `<div class="budget-bar-wrap">
-      <div class="budget-bar-head"><span class="bcat">${cat}</span><span class="bnum">₹${spent.toLocaleString('en-IN')} / ₹${b.toLocaleString('en-IN')} (${pct}%)</span></div>
-      <div class="budget-bar"><div class="budget-fill" style="width:${pct}%;background:${col};"></div></div>
-    </div>`;
-      }).join('');
+      document.getElementById('budget-bars').innerHTML = Object.entries(budgets).map(([cat, b]) => { const spent = catTot[cat] || 0, pct = Math.min(Math.round(spent / b * 100), 100), col = pct >= 90 ? '#ff4757' : pct >= 70 ? '#ffd166' : '#28dfb5'; return `<div class="budget-bar-wrap"><div class="budget-bar-head"><span class="bcat">${cat}</span><span class="bnum">₹${spent.toLocaleString('en-IN')} / ₹${b.toLocaleString('en-IN')} (${pct}%)</span></div><div class="budget-bar"><div class="budget-fill" style="width:${pct}%;background:${col};"></div></div></div>`; }).join('');
     }
 
     function checkBudgetAlerts() {
@@ -3936,98 +4297,225 @@
       renderBudgets();
     }
 
-    /* ═══════════════════════════════════════════
-       RUN ALL AI
-    ═══════════════════════════════════════════ */
     async function runAI() {
       if (!txns.length) { alert('Import transaction data first!'); return; }
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      switchTab2('anomaly', null);
       document.querySelectorAll('.nav-item').forEach((n, i) => i === 2 ? n.classList.add('active') : n.classList.remove('active'));
-      document.getElementById('tab-anomaly').classList.add('active');
-      document.getElementById('topbar-title').textContent = 'Anomaly Detector';
       await detectAnomalies();
     }
 
     /* ═══════════════════════════════════════════
-       EXPORT CSV
+       APPROVALS
     ═══════════════════════════════════════════ */
+    function filterApprovals(f) {
+      approvalsFilter = f;
+      ['all', 'pending', 'approved', 'rejected'].forEach(s => {
+        const btn = document.getElementById('af-' + s);
+        if (btn) { btn.className = s === f ? 'btn btn-tonal' : 'btn btn-ghost'; btn.style.padding = '8px 16px'; btn.style.fontSize = '12px'; }
+      });
+      renderApprovals();
+    }
+
+    function renderApprovals() {
+      const pending = txns.filter(t => t.status === 'pending');
+      const approved = txns.filter(t => t.status === 'approved');
+      const rejected = txns.filter(t => t.status === 'rejected');
+      document.getElementById('ap-pending-count').textContent = pending.length;
+      document.getElementById('ap-approved-count').textContent = approved.length;
+      document.getElementById('ap-rejected-count').textContent = rejected.length;
+      document.getElementById('ap-pending-amt').textContent = '₹' + pending.reduce((s, t) => s + t.amount, 0).toLocaleString('en-IN');
+      document.getElementById('ap-approved-amt').textContent = '₹' + approved.reduce((s, t) => s + t.amount, 0).toLocaleString('en-IN');
+      document.getElementById('ap-rejected-amt').textContent = '₹' + rejected.reduce((s, t) => s + t.amount, 0).toLocaleString('en-IN');
+      const badge = document.getElementById('pending-badge');
+      if (badge) { badge.style.display = pending.length ? 'inline' : 'none'; badge.textContent = pending.length; }
+      const filtered = approvalsFilter === 'all' ? txns : txns.filter(t => t.status === approvalsFilter);
+      const sc = { pending: 'yellow', approved: 'teal', rejected: 'red' };
+      document.getElementById('approvals-table').innerHTML = filtered.length ? `<table class="tx-table"><thead><tr><th>Date</th><th>Description</th><th>Vendor</th><th>Category</th><th>Amount</th><th>Status</th><th style="text-align:center">Action</th></tr></thead><tbody>${filtered.map(t => { const realIdx = txns.indexOf(t); return `<tr><td><span style="font-family:var(--ff-mono);font-size:12px;">${t.date}</span></td><td><span style="font-size:13px;">${t.description}</span>${t.notes ? `<div style="font-size:11px;color:var(--outline);margin-top:2px;">${t.notes}</div>` : ''}</td><td><span style="font-size:12px;color:var(--on-surface-var);">${t.vendor || '—'}</span></td><td><span class="chip chip-gray">${t.category}</span></td><td><span class="tx-amount">₹${t.amount.toLocaleString('en-IN')}</span></td><td><span class="chip chip-${sc[t.status] || 'blue'}">${t.status}</span></td><td style="text-align:center"><div style="display:flex;gap:6px;justify-content:center;">${t.status !== 'approved' ? `<button onclick="setApproval(${realIdx},'approved')" style="background:rgba(40,223,181,.12);color:var(--tertiary);border:1px solid rgba(40,223,181,.25);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:var(--ff-mono);">✓ Approve</button>` : ''}${t.status !== 'rejected' ? `<button onclick="setApproval(${realIdx},'rejected')" style="background:rgba(255,71,87,.08);color:#ff6b7a;border:1px solid rgba(255,71,87,.2);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:var(--ff-mono);">✗ Reject</button>` : ''}<button onclick="openModal('${realIdx}')" style="background:rgba(79,124,255,.1);color:var(--primary-dim);border:1px solid rgba(79,124,255,.2);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:var(--ff-mono);">Edit</button></div></td></tr>`; }).join('')}</tbody></table>` : `<div style="padding:48px;text-align:center;color:var(--outline);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">✅</div>No ${approvalsFilter === 'all' ? '' : approvalsFilter} transactions</div>`;
+    }
+
+    function setApproval(idx, status) { txns[idx].status = status; save(); renderApprovals(); renderTxTable(); }
+
+    /* ═══════════════════════════════════════════
+       GST
+    ═══════════════════════════════════════════ */
+    function renderGSTReport() {
+      const gstTxns = txns.filter(t => t.gstType && t.gstType !== 'none' && t.gstTotal > 0);
+      document.getElementById('gst-r-base').textContent = '₹' + gstTxns.reduce((s, t) => s + t.amount, 0).toLocaleString('en-IN');
+      document.getElementById('gst-r-igst').textContent = '₹' + gstTxns.reduce((s, t) => s + (t.igst || 0), 0).toLocaleString('en-IN');
+      document.getElementById('gst-r-cgst').textContent = '₹' + gstTxns.reduce((s, t) => s + (t.cgst || 0), 0).toLocaleString('en-IN');
+      document.getElementById('gst-r-sgst').textContent = '₹' + gstTxns.reduce((s, t) => s + (t.sgst || 0), 0).toLocaleString('en-IN');
+      document.getElementById('gst-table').innerHTML = gstTxns.length ? `<table class="tx-table"><thead><tr><th>Date</th><th>Vendor</th><th>GSTIN</th><th>Base</th><th>Type</th><th>Rate</th><th>IGST</th><th>CGST</th><th>SGST</th><th>Total</th></tr></thead><tbody>${gstTxns.map(t => `<tr><td><span style="font-family:var(--ff-mono);font-size:11px;">${t.date}</span></td><td><span style="font-size:12px;">${t.vendor || t.description}</span></td><td><span style="font-family:var(--ff-mono);font-size:10px;color:var(--outline);">${t.gstin || '—'}</span></td><td><span style="font-family:var(--ff-mono);font-size:12px;">₹${t.amount.toLocaleString('en-IN')}</span></td><td><span class="chip chip-purple" style="font-size:9px;">${t.gstType.toUpperCase()}</span></td><td><span class="chip chip-blue" style="font-size:9px;">${t.gstRate}%</span></td><td style="font-family:var(--ff-mono);font-size:12px;">₹${(t.igst || 0).toLocaleString('en-IN')}</td><td style="font-family:var(--ff-mono);font-size:12px;">₹${(t.cgst || 0).toLocaleString('en-IN')}</td><td style="font-family:var(--ff-mono);font-size:12px;">₹${(t.sgst || 0).toLocaleString('en-IN')}</td><td style="font-family:var(--ff-mono);font-size:12px;color:var(--primary-dim);">₹${(t.totalWithGst || t.amount).toLocaleString('en-IN')}</td></tr>`).join('')}</tbody></table>` : `<div style="padding:40px;text-align:center;color:var(--outline);font-size:13px;">Add transactions with GST details to populate this register</div>`;
+    }
+
+    async function generateGSTReport() {
+      if (!txns.length) { alert('Import data first.'); return; }
+      document.getElementById('gst-ai-panel').style.display = 'block';
+      document.getElementById('gst-ai-result').style.display = 'none';
+      const gstTxns = txns.filter(t => t.gstType !== 'none' && t.gstTotal > 0);
+      try {
+        const result = await callClaude(`Analyze GST data and provide ITC optimization advice. IGST: ₹${gstTxns.reduce((s, t) => s + (t.igst || 0), 0).toLocaleString('en-IN')}, CGST: ₹${gstTxns.reduce((s, t) => s + (t.cgst || 0), 0).toLocaleString('en-IN')}, SGST: ₹${gstTxns.reduce((s, t) => s + (t.sgst || 0), 0).toLocaleString('en-IN')}. Vendors: ${gstTxns.map(t => `${t.vendor || t.description} (${t.gstType}, ${t.gstRate}%, ₹${t.gstTotal})`).join('; ')}. Advise on ITC eligibility, blocked credit (Section 17(5)), GSTR-2B reconciliation.`, 'You are a GST consultant. Provide practical ITC optimization advice in 200 words with bullet points.');
+        document.getElementById('gst-ai-panel').style.display = 'none';
+        document.getElementById('gst-ai-result').style.display = 'block';
+        document.getElementById('gst-ai-result').innerHTML = `<div class="ai-panel" style="border-color:rgba(40,223,181,.2);"><div class="ai-panel-head" style="color:var(--tertiary);"><span class="material-symbols-outlined icon-fill" style="font-size:16px;">smart_toy</span>AI GST & ITC Analysis</div><div style="margin-top:12px;font-size:13px;line-height:1.75;white-space:pre-wrap;color:var(--on-surface-var);">${result}</div></div>`;
+      } catch {
+        document.getElementById('gst-ai-panel').style.display = 'none';
+        document.getElementById('gst-ai-result').style.display = 'block';
+        document.getElementById('gst-ai-result').innerHTML = '<div class="alert-strip alert-warn"><span>⚠️</span>Could not generate GST analysis. Please try again.</div>';
+      }
+    }
+
+    function exportGSTCSV() {
+      const gstTxns = txns.filter(t => t.gstType !== 'none' && t.gstTotal > 0);
+      if (!gstTxns.length) { alert('No GST transactions to export.'); return; }
+      const rows = ['Date,Vendor,GSTIN,Description,Base Amount,GST Type,GST Rate,IGST,CGST,SGST,Total With GST,Category', ...gstTxns.map(t => `${t.date},"${t.vendor || t.description}","${t.gstin || ''}","${t.description}",${t.amount},${t.gstType},${t.gstRate}%,${t.igst || 0},${t.cgst || 0},${t.sgst || 0},${t.totalWithGst || t.amount},${t.category}`)];
+      const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(rows.join('\n')); a.download = 'spendai-gst-register.csv'; a.click();
+    }
+
     function exportCSV() {
       if (!txns.length) return;
       const rows = ['Date,Description,Category,Amount', ...txns.map(t => `${t.date},"${t.description}",${t.category},${t.amount}`)];
-      const a = document.createElement('a');
-      a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(rows.join('\n'));
-      a.download = 'spendai-transactions.csv'; a.click();
+      const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(rows.join('\n')); a.download = 'spendai-transactions.csv'; a.click();
     }
 
     /* ═══════════════════════════════════════════
        MODAL
     ═══════════════════════════════════════════ */
-    function openModal() { document.getElementById('modal').classList.add('open'); }
+    function updateGSTBreakdown() {
+      const base = parseFloat(document.getElementById('m-amt').value) || 0;
+      const rate = parseFloat(document.getElementById('m-gst-rate').value) || 0;
+      const type = document.getElementById('m-gst-type').value;
+      const panel = document.getElementById('gst-breakdown');
+      if (type === 'none' || rate === 0 || base === 0) { panel.style.display = 'none'; return; }
+      panel.style.display = 'block';
+      const tax = base * rate / 100, total = base + tax;
+      document.getElementById('gst-base').textContent = '₹' + base.toLocaleString('en-IN');
+      document.getElementById('gst-total').textContent = '₹' + total.toLocaleString('en-IN');
+      const igstRow = document.getElementById('igst-row'), cgstRow = document.getElementById('cgst-row'), sgstRow = document.getElementById('sgst-row');
+      if (type === 'igst') { igstRow.style.display = 'flex'; cgstRow.style.display = 'none'; sgstRow.style.display = 'none'; document.getElementById('gst-igst').textContent = '₹' + tax.toLocaleString('en-IN'); }
+      else { igstRow.style.display = 'none'; cgstRow.style.display = 'flex'; sgstRow.style.display = 'flex'; document.getElementById('gst-cgst').textContent = '₹' + (tax / 2).toLocaleString('en-IN'); document.getElementById('gst-sgst').textContent = '₹' + (tax / 2).toLocaleString('en-IN'); }
+    }
+
+    function openModal(editIdx = '') {
+      document.getElementById('m-edit-idx').value = editIdx;
+      if (editIdx !== '') {
+        const t = txns[parseInt(editIdx)];
+        document.getElementById('modal-title-text').textContent = 'Edit Transaction';
+        document.getElementById('modal-save-btn').textContent = 'Save Changes';
+        document.getElementById('m-date').value = t.date || '';
+        document.getElementById('m-amt').value = t.amount || '';
+        document.getElementById('m-desc').value = t.description || '';
+        document.getElementById('m-vendor').value = t.vendor || '';
+        document.getElementById('m-gstin').value = t.gstin || '';
+        document.getElementById('m-gst-type').value = t.gstType || 'none';
+        document.getElementById('m-gst-rate').value = t.gstRate || 18;
+        document.getElementById('m-cat').value = t.category || 'Other';
+        document.getElementById('m-status').value = t.status || 'pending';
+        document.getElementById('m-notes').value = t.notes || '';
+      } else {
+        document.getElementById('modal-title-text').textContent = '+ Add Transaction';
+        document.getElementById('modal-save-btn').textContent = 'Add Transaction';
+        document.getElementById('m-date').value = new Date().toISOString().slice(0, 10);
+        document.getElementById('m-amt').value = '';
+        document.getElementById('m-desc').value = '';
+        document.getElementById('m-vendor').value = '';
+        document.getElementById('m-gstin').value = '';
+        document.getElementById('m-gst-type').value = 'none';
+        document.getElementById('m-gst-rate').value = '18';
+        document.getElementById('m-cat').value = 'SaaS / Software';
+        document.getElementById('m-status').value = 'pending';
+        document.getElementById('m-notes').value = '';
+        document.getElementById('gst-breakdown').style.display = 'none';
+      }
+      document.getElementById('modal').classList.add('open');
+      document.getElementById('m-amt').addEventListener('input', updateGSTBreakdown);
+      document.getElementById('m-gst-type').addEventListener('change', updateGSTBreakdown);
+      document.getElementById('m-gst-rate').addEventListener('change', updateGSTBreakdown);
+    }
+
     function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
     function addTx() {
-      const tx = { date: document.getElementById('m-date').value || new Date().toISOString().slice(0, 10), description: document.getElementById('m-desc').value, amount: parseFloat(document.getElementById('m-amt').value) || 0, category: document.getElementById('m-cat').value };
-      if (!tx.description) return;
-      txns.push(tx); save(); closeModal(); refreshDash(); checkBudgetAlerts();
+      const editIdx = document.getElementById('m-edit-idx').value;
+      const base = parseFloat(document.getElementById('m-amt').value) || 0;
+      const gstType = document.getElementById('m-gst-type').value;
+      const gstRate = parseFloat(document.getElementById('m-gst-rate').value) || 0;
+      const tax = gstType !== 'none' ? base * gstRate / 100 : 0;
+      const tx = {
+        date: document.getElementById('m-date').value,
+        amount: base,
+        description: document.getElementById('m-desc').value,
+        vendor: document.getElementById('m-vendor').value,
+        gstin: document.getElementById('m-gstin').value.toUpperCase(),
+        gstType, gstRate,
+        igst: gstType === 'igst' ? tax : 0,
+        cgst: gstType !== 'igst' && gstType !== 'none' ? tax / 2 : 0,
+        sgst: gstType !== 'igst' && gstType !== 'none' ? tax / 2 : 0,
+        gstTotal: tax,
+        totalWithGst: base + tax,
+        category: document.getElementById('m-cat').value,
+        status: document.getElementById('m-status').value,
+        notes: document.getElementById('m-notes').value
+      };
+      if (!tx.description || !tx.amount) { alert('Description and amount are required.'); return; }
+      if (!checkPlanLimit() && editIdx === '') return;
+      if (editIdx !== '') { txns[parseInt(editIdx)] = tx; } else { txns.push(tx); }
+      save(); closeModal(); refreshDash(); checkBudgetAlerts(); renderApprovals(); renderGSTReport();
     }
 
-    document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-
-    /* ═══════════════════════════════════════════
-       DRAG & DROP
-    ═══════════════════════════════════════════ */
-    const uz = document.getElementById('upload-zone');
-    uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('drag'); });
-    uz.addEventListener('dragleave', () => uz.classList.remove('drag'));
-    uz.addEventListener('drop', e => { e.preventDefault(); uz.classList.remove('drag'); const f = e.dataTransfer.files[0]; if (f) { const inp = document.getElementById('csv-input'); const dt = new DataTransfer(); dt.items.add(f); inp.files = dt.files; handleCSV(inp); } });
-
-    /* ═══════════════════════════════════════════
-       PERSIST
-    ═══════════════════════════════════════════ */
-    function save() {
-      localStorage.setItem('spendai_tx', JSON.stringify(txns));
-      localStorage.setItem('spendai_bud', JSON.stringify(budgets));
-      localStorage.setItem('spendai_anm', JSON.stringify(anomals));
+    function deleteTx(idx) {
+      if (!confirm('Delete this transaction?')) return;
+      txns.splice(idx, 1); save(); refreshDash(); checkBudgetAlerts(); renderApprovals(); renderGSTReport();
     }
 
-
-    function mobileNav(t) {
-      // switch tab content
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById('tab-' + t).classList.add('active');
-      // update mobile nav active state
-      document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active'));
-      const el = document.getElementById('mnav-' + t);
-      if (el) el.classList.add('active');
-      const titles = { dashboard:'Dashboard', import:'Import Data', anomaly:'Anomaly Detector', subscriptions:'Subscriptions', advisor:'Cost Advisor', report:'AI Report', budgets:'Budget Alerts' };
-      document.getElementById('topbar-title').textContent = titles[t] || t;
-    }
     /* ═══════════════════════════════════════════
-       INIT
+       PRICING
     ═══════════════════════════════════════════ */
-    if (txns.length) { refreshDash(); checkBudgetAlerts(); }
+    function updatePricingCards() {
+      const plan = userProfile?.plan || 'free';
+      ['starter', 'pro', 'enterprise'].forEach(p => {
+        const btn = document.getElementById('btn-' + p);
+        if (!btn) return;
+        if (p === plan) { btn.textContent = '✓ Current Plan'; btn.disabled = true; btn.className = 'btn btn-ghost'; btn.style.cssText = 'width:100%;justify-content:center;padding:12px;margin-top:8px;opacity:.5;cursor:default;'; }
+      });
+    }
+
+    function selectPlan(plan) {
+      if (plan === 'enterprise') { alert('Contact us at enterprise@spendai.app for custom pricing.'); return; }
+      const titles = { starter: 'Upgrade to Starter', pro: 'Upgrade to Pro' };
+      const subtitles = { starter: '₹999/month', pro: '₹2,999/month' };
+      document.getElementById('payment-title').textContent = titles[plan];
+      document.getElementById('payment-subtitle').textContent = subtitles[plan] + ' · Cancel anytime';
+      document.getElementById('payment-panel').dataset.plan = plan;
+      document.getElementById('payment-panel').style.display = 'block';
+      document.getElementById('payment-panel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function confirmPayment() {
+      const name = document.getElementById('pay-name').value.trim();
+      const card = document.getElementById('pay-card').value.trim();
+      const exp = document.getElementById('pay-exp').value.trim();
+      const cvv = document.getElementById('pay-cvv').value.trim();
+      const errEl = document.getElementById('payment-error');
+      errEl.style.display = 'none';
+      if (!name || !card || !exp || !cvv) { errEl.style.display = 'flex'; errEl.textContent = 'Please fill all payment fields.'; return; }
+      if (card.replace(/\s/g, '').length !== 16) { errEl.style.display = 'flex'; errEl.textContent = 'Invalid card number.'; return; }
+      const btn = document.getElementById('pay-confirm-btn');
+      btn.disabled = true; btn.textContent = 'Processing…';
+      await new Promise(r => setTimeout(r, 1800));
+      const plan = document.getElementById('payment-panel').dataset.plan || 'pro';
+      if (currentUser) {
+        userProfile = await upsertProfile(currentUser.id, { plan });
+        updateProfileUI();
+      }
+      document.getElementById('payment-panel').style.display = 'none';
+      btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined icon-fill" style="font-size:15px;">lock</span>Confirm Upgrade';
+      alert(`🎉 Welcome to ${PLAN_LIMITS[plan].label}! Your plan has been upgraded.`);
+      updatePricingCards();
+    }
+
+    /* close modal on backdrop click */
+    document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
   </script>
-
-  <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-nav" id="mobile-nav" style="display:none;">
-    <div class="mobile-nav-item active" id="mnav-dashboard" onclick="mobileNav('dashboard')">
-      <span class="material-symbols-outlined">dashboard</span>Home
-    </div>
-    <div class="mobile-nav-item" id="mnav-import" onclick="mobileNav('import')">
-      <span class="material-symbols-outlined">upload_file</span>Import
-    </div>
-    <div class="mobile-nav-item" id="mnav-anomaly" onclick="mobileNav('anomaly')">
-      <span class="material-symbols-outlined">emergency_home</span>Alerts
-    </div>
-    <div class="mobile-nav-item" id="mnav-advisor" onclick="mobileNav('advisor')">
-      <span class="material-symbols-outlined">psychology</span>Advisor
-    </div>
-    <div class="mobile-nav-item" id="mnav-report" onclick="mobileNav('report')">
-      <span class="material-symbols-outlined">analytics</span>Report
-    </div>
-  </nav>
-
 </body>
 
 </html>

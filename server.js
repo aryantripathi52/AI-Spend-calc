@@ -9,6 +9,18 @@ app.use(express.json());
 // ── Serve frontend ──────────────────────────────────────────
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ── Config endpoint: safely serve Supabase public vars ──────
+// The anon key is safe to expose to the browser (RLS protects your data),
+// but keeping it in .env means it never appears in git history.
+app.get('/api/config', (req, res) => {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    return res.status(500).json({ error: 'Supabase credentials not configured on server.' });
+  }
+  res.json({ supabaseUrl: url, supabaseAnonKey: key });
+});
+
 // ── Rate limit: max 20 AI calls per IP per minute ───────────
 const aiLimiter = rateLimit({
   windowMs: 60_000,
@@ -26,7 +38,7 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,   // ← key only here, on server
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
