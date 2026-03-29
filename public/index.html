@@ -3126,8 +3126,6 @@
             class="material-symbols-outlined">subscriptions</span>Subscriptions</div>
         <div class="nav-item" onclick="switchTab2('advisor',event)"><span class="material-symbols-outlined"
             style="color:#c09bf0;">psychology</span>Cost Advisor</div>
-        <div class="nav-item" onclick="switchTab2('report',event)"><span
-            class="material-symbols-outlined">analytics</span>AI Report</div>
         <div class="nav-item" onclick="switchTab2('budgets',event)"><span
             class="material-symbols-outlined">notification_important</span>Budget Alerts</div>
         <div class="nav-item" onclick="switchTab2('approvals',event)"><span
@@ -3361,35 +3359,7 @@
           </div>
         </div>
 
-        <!-- REPORT TAB -->
-        <div class="tab-panel" id="tab-report">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700;">AI Executive Report</div>
-            <div style="display:flex;gap:10px;"><button class="btn btn-ghost" onclick="window.print()"><span
-                  class="material-symbols-outlined" style="font-size:15px;">print</span>Print</button><button
-                class="btn btn-primary" onclick="generateReport()"><span class="material-symbols-outlined icon-fill"
-                  style="font-size:15px;">smart_toy</span>Generate Report</button></div>
-          </div>
-          <div id="report-loading" style="display:none;margin-bottom:16px;">
-            <div class="ai-panel">
-              <div class="ai-panel-head"><span class="material-symbols-outlined icon-fill"
-                  style="font-size:16px;">edit_note</span>Claude is writing your executive summary...</div>
-              <div class="ai-loading">
-                <div class="ai-loading-fill"></div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header"><span class="card-title">Executive Summary</span><span id="report-date"
-                style="font-family:var(--ff-mono);font-size:11px;color:var(--outline);"></span></div>
-            <div class="card-body" id="report-body">
-              <div style="padding:32px;text-align:center;color:var(--outline);font-size:14px;">
-                <div style="font-size:32px;margin-bottom:12px;">📄</div>Generate an AI-written narrative summary for
-                leadership review
-              </div>
-            </div>
-          </div>
-        </div>
+
 
         <!-- BUDGETS TAB -->
         <div class="tab-panel" id="tab-budgets">
@@ -3610,7 +3580,8 @@
             to simulate upgrade.</span></div>
 
         <!-- Payment method tabs -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:20px;" id="pay-method-tabs">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:20px;"
+          id="pay-method-tabs">
           <button onclick="switchPayMethod('card')" id="pay-tab-card"
             style="padding:10px 6px;border-radius:10px;border:2px solid var(--primary);background:rgba(79,124,255,.12);color:var(--primary-dim);font-size:12px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .2s;">
             <span class="material-symbols-outlined" style="font-size:18px;">credit_card</span>Card
@@ -3631,9 +3602,10 @@
 
         <!-- Card fields -->
         <div id="pay-section-card" style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
-          <div class="form-group"><label>Cardholder Name</label><input type="text" placeholder="Your full name" id="pay-name"></div>
-          <div class="form-group"><label>Card Number (Debit / Credit)</label><input type="text" placeholder="4242 4242 4242 4242"
-              maxlength="19" id="pay-card" style="font-family:var(--ff-mono);"
+          <div class="form-group"><label>Cardholder Name</label><input type="text" placeholder="Your full name"
+              id="pay-name"></div>
+          <div class="form-group"><label>Card Number (Debit / Credit)</label><input type="text"
+              placeholder="4242 4242 4242 4242" maxlength="19" id="pay-card" style="font-family:var(--ff-mono);"
               oninput="this.value=this.value.replace(/[^\d\s]/g,'').replace(/(\d{4})/g,'$1 ').trim().slice(0,19)"></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM / YY" maxlength="7"
@@ -3647,38 +3619,46 @@
         <!-- GPay fields -->
         <div id="pay-section-gpay" style="display:none;flex-direction:column;gap:12px;margin-bottom:20px;">
           <div style="background:var(--bg-container-low);border-radius:12px;padding:24px;text-align:center;">
-            <span class="material-symbols-outlined" style="font-size:48px;color:var(--tertiary);margin-bottom:8px;display:block;">g_mobiledata</span>
+            <span class="material-symbols-outlined"
+              style="font-size:48px;color:var(--tertiary);margin-bottom:8px;display:block;">g_mobiledata</span>
             <div style="font-weight:600;margin-bottom:6px;">Pay with Google Pay</div>
             <div style="font-size:12px;color:var(--outline);">Enter your UPI ID linked to GPay</div>
           </div>
-          <div class="form-group"><label>UPI / GPay ID</label><input type="text" placeholder="yourname@gpay" id="pay-upi" style="font-family:var(--ff-mono);"></div>
+          <div class="form-group"><label>UPI / GPay ID</label><input type="text" placeholder="yourname@gpay"
+              id="pay-upi" style="font-family:var(--ff-mono);"></div>
         </div>
 
         <!-- PayPal fields -->
         <div id="pay-section-paypal" style="display:none;flex-direction:column;gap:12px;margin-bottom:20px;">
           <div style="background:var(--bg-container-low);border-radius:12px;padding:24px;text-align:center;">
-            <span class="material-symbols-outlined" style="font-size:48px;color:#0070ba;margin-bottom:8px;display:block;">account_balance_wallet</span>
+            <span class="material-symbols-outlined"
+              style="font-size:48px;color:#0070ba;margin-bottom:8px;display:block;">account_balance_wallet</span>
             <div style="font-weight:600;margin-bottom:6px;">Pay with PayPal</div>
             <div style="font-size:12px;color:var(--outline);">Enter your PayPal email address</div>
           </div>
-          <div class="form-group"><label>PayPal Email</label><input type="email" placeholder="you@example.com" id="pay-paypal-email" style="font-family:var(--ff-mono);"></div>
+          <div class="form-group"><label>PayPal Email</label><input type="email" placeholder="you@example.com"
+              id="pay-paypal-email" style="font-family:var(--ff-mono);"></div>
         </div>
 
         <!-- Coupon fields -->
         <div id="pay-section-coupon" style="display:none;flex-direction:column;gap:12px;margin-bottom:20px;">
           <div style="background:var(--bg-container-low);border-radius:12px;padding:24px;text-align:center;">
-            <span class="material-symbols-outlined" style="font-size:48px;color:var(--secondary);margin-bottom:8px;display:block;">local_offer</span>
+            <span class="material-symbols-outlined"
+              style="font-size:48px;color:var(--secondary);margin-bottom:8px;display:block;">local_offer</span>
             <div style="font-weight:600;margin-bottom:6px;">Redeem Coupon Code</div>
             <div style="font-size:12px;color:var(--outline);">Try: SPEND50 · LAUNCH25 · FREEPRO · TRY2999</div>
           </div>
           <div class="form-group"><label>Coupon Code</label>
             <div style="display:flex;gap:8px;">
-              <input type="text" placeholder="Enter code" id="pay-coupon" style="font-family:var(--ff-mono);text-transform:uppercase;flex:1;"
+              <input type="text" placeholder="Enter code" id="pay-coupon"
+                style="font-family:var(--ff-mono);text-transform:uppercase;flex:1;"
                 oninput="this.value=this.value.toUpperCase()">
-              <button class="btn btn-tonal" onclick="applyCoupon()" style="white-space:nowrap;padding:10px 16px;border-radius:8px;">Apply</button>
+              <button class="btn btn-tonal" onclick="applyCoupon()"
+                style="white-space:nowrap;padding:10px 16px;border-radius:8px;">Apply</button>
             </div>
           </div>
-          <div id="coupon-result" style="display:none;padding:12px;border-radius:8px;font-size:13px;font-weight:600;"></div>
+          <div id="coupon-result" style="display:none;padding:12px;border-radius:8px;font-size:13px;font-weight:600;">
+          </div>
         </div>
 
         <div id="payment-error" style="display:none;" class="alert-strip alert-danger"></div>
@@ -3738,7 +3718,8 @@
             style="color:var(--outline);">SGST/UTGST</span><span id="gst-sgst">₹0</span></div>
         <div
           style="display:flex;justify-content:space-between;border-top:1px solid rgba(79,124,255,.15);padding-top:6px;margin-top:4px;font-weight:600;">
-          <span>Total (incl. GST)</span><span id="gst-total" style="color:var(--primary);">₹0</span></div>
+          <span>Total (incl. GST)</span><span id="gst-total" style="color:var(--primary);">₹0</span>
+        </div>
       </div>
       <div><label>Category</label><select id="m-cat">
           <option>SaaS / Software</option>
@@ -3778,8 +3759,7 @@
         class="material-symbols-outlined">psychology</span>Advisor</div>
     <div class="mobile-nav-item" id="mnav-gst" onclick="mobileNav('gst')"><span
         class="material-symbols-outlined">receipt_long</span>GST</div>
-    <div class="mobile-nav-item" id="mnav-report" onclick="mobileNav('report')"><span
-        class="material-symbols-outlined">analytics</span>Report</div>
+
   </nav>
 
   <script>
@@ -3828,7 +3808,7 @@
       try {
         const { data, error } = await _sb.from('profiles').select('*').eq('id', uid).single();
         if (!error && data) return data;
-      } catch {}
+      } catch { }
       // profiles table missing or RLS blocked — build from auth user directly
       return buildProfileFromUser(currentUser);
     }
@@ -3849,7 +3829,7 @@
       try {
         const { data } = await _sb.from('profiles').upsert({ id: uid, ...fields }, { onConflict: 'id' }).select().single();
         if (data) return data;
-      } catch {}
+      } catch { }
       // Fallback: merge fields into in-memory profile so UI still updates
       return { ...(userProfile || buildProfileFromUser(currentUser) || {}), ...fields };
     }
@@ -4049,7 +4029,7 @@
       try {
         const logoutNav = document.querySelector('.nav-item[onclick="doLogout()"]');
         if (logoutNav) logoutNav.style.opacity = '0.5';
-        if (!_sb) { 
+        if (!_sb) {
           // No Supabase — just reset to landing
           currentUser = null; userProfile = null;
           txns = []; budgets = {}; anomals = [];
@@ -4061,7 +4041,7 @@
         currentUser = null; userProfile = null;
         txns = []; budgets = {}; anomals = [];
         goTo('landing');
-      } catch(err) {
+      } catch (err) {
         console.error('Logout error:', err);
         // Force reset even if signOut fails
         currentUser = null; userProfile = null;
@@ -4089,7 +4069,7 @@
     /* ═══════════════════════════════════════════
        APP TABS
     ═══════════════════════════════════════════ */
-    const TAB_TITLES = { dashboard: 'Dashboard', import: 'Import Data', anomaly: 'Anomaly Detector', subscriptions: 'Subscriptions', advisor: 'Cost Advisor', report: 'AI Report', budgets: 'Budget Alerts', approvals: 'Approvals', gst: 'GST Report' };
+    const TAB_TITLES = { dashboard: 'Dashboard', import: 'Import Data', anomaly: 'Anomaly Detector', subscriptions: 'Subscriptions', advisor: 'Cost Advisor', budgets: 'Budget Alerts', approvals: 'Approvals', gst: 'GST Report' };
 
     function switchTab2(t, e) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -4107,6 +4087,8 @@
       if (el) el.classList.add('active');
       document.getElementById('topbar-title').textContent = TAB_TITLES[t] || t;
     }
+
+
 
     /* ═══════════════════════════════════════════
        AI PROXY CALL
@@ -4359,28 +4341,7 @@
       document.getElementById('recs-list').innerHTML = `<div class="alert-strip alert-success" style="margin-bottom:16px;"><span>💰</span>Total potential savings: <strong>₹${total.toLocaleString('en-IN')}/month</strong> (₹${(total * 12).toLocaleString('en-IN')}/year)</div>${recs.map((r, i) => `<div class="rec-card ledger-glow"><div style="flex:1"><div class="rec-title">${i + 1}. ${r.title}</div><div class="rec-saving">Est. ₹${(r.estimatedSaving || 0).toLocaleString('en-IN')}/month</div><div class="rec-desc">${r.description}</div></div><span class="chip chip-${pc[r.priority] || 'blue'}">${r.priority}</span></div>`).join('')}`;
     }
 
-    /* ═══════════════════════════════════════════
-       AI REPORT
-    ═══════════════════════════════════════════ */
-    async function generateReport() {
-      if (!txns.length) { alert('Import data first.'); return; }
-      document.getElementById('report-loading').style.display = 'block';
-      document.getElementById('report-body').innerHTML = '';
-      const catTot = {}; txns.forEach(t => catTot[t.category] = (catTot[t.category] || 0) + t.amount);
-      const total = txns.reduce((s, t) => s + t.amount, 0);
-      const monthly = {}; txns.forEach(t => { const m = t.date ? t.date.slice(0, 7) : '?'; monthly[m] = (monthly[m] || 0) + t.amount; });
-      const gstTotal = txns.reduce((s, t) => s + (t.gstTotal || 0), 0);
-      const pendingCount = txns.filter(t => t.status === 'pending').length;
-      try {
-        const report = await callClaude(`Write a professional executive expense summary ~400 words. Include: overall spend, GST paid (₹${gstTotal.toLocaleString('en-IN')}), ITC eligibility, category breakdown, approval status (${pendingCount} pending), anomalies (${anomals.length} flagged), India-specific cost optimisation.\nTotal: ₹${total.toLocaleString('en-IN')}\nCategories: ${JSON.stringify(catTot)}\nMonthly: ${JSON.stringify(monthly)}`, 'You are a CA/CFO writing a board-level expense summary for an Indian company. Use formal prose with clear sections.');
-        document.getElementById('report-loading').style.display = 'none';
-        document.getElementById('report-date').textContent = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
-        document.getElementById('report-body').innerHTML = `<div class="report-box">${report}</div>`;
-      } catch {
-        document.getElementById('report-loading').style.display = 'none';
-        document.getElementById('report-body').innerHTML = '<div class="alert-strip alert-warn"><span>⚠️</span>Could not generate AI report. Please try again.</div>';
-      }
-    }
+
 
     /* ═══════════════════════════════════════════
        BUDGETS
