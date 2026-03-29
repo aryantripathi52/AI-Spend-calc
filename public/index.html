@@ -3732,8 +3732,12 @@
     async function initSupabase() {
       try {
         const res = await fetch('/api/config');
-        if (!res.ok) throw new Error('Config endpoint returned ' + res.status);
-        const { supabaseUrl, supabaseAnonKey } = await res.json();
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const parts = [body.error, body.hint].filter(Boolean);
+          throw new Error(parts.length ? parts.join('\n\n') : ('HTTP ' + res.status));
+        }
+        const { supabaseUrl, supabaseAnonKey } = body;
         _sb = supabase.createClient(supabaseUrl, supabaseAnonKey);
       } catch (err) {
         console.error('Failed to load Supabase config:', err);

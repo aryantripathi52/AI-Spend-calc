@@ -16,7 +16,10 @@ app.get('/api/config', (req, res) => {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_ANON_KEY;
   if (!url || !key) {
-    return res.status(500).json({ error: 'Supabase credentials not configured on server.' });
+    return res.status(503).json({
+      error: 'Supabase credentials not configured on the server.',
+      hint: 'Set SUPABASE_URL and SUPABASE_ANON_KEY in Vercel → Project → Settings → Environment Variables, then redeploy.'
+    });
   }
   res.json({ supabaseUrl: url, supabaseAnonKey: key });
 });
